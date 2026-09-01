@@ -1,116 +1,66 @@
-# StudyFlow - Gerenciador de Fluxo de Estudo e Produtividade
+# StudyFlow
 
-## Visão Geral
+Aplicação web para ajudar estudantes a organizar matérias, tarefas acadêmicas, prazos e o andamento de suas atividades.
 
-**StudyFlow** é uma aplicação web desenvolvida como trabalho da disciplina de Tecnologia e Construção de Software. O projeto visa fornecer uma plataforma integrada e intuitiva para estudantes e profissionais gerenciarem seu tempo de estudo, acompanharem seu progresso e manterem-se motivados através de metas e conquistas.
+## Problema resolvido
 
-## Problema Resolvido
+Quem cursa várias disciplinas precisa conciliar trabalhos, exercícios e leituras com datas diferentes. O StudyFlow centraliza essas atividades para facilitar a identificação de prioridades e prazos próximos.
 
-Estudantes e profissionais enfrentam dificuldades em:
-- Organizar e gerenciar seu tempo de estudo
-- Acompanhar o progresso em diferentes disciplinas/módulos
-- Manter uma rotina consistente de aprendizado
-- Visualizar e analisar seu desempenho
+## Etapa atual
 
-O StudyFlow integra gestão de tarefas, cronograma de estudo, acompanhamento de progresso e sistema de motivação em um único lugar.
+**Etapa 02 - Protótipo estrutural com HTML semântico.** Esta entrega apresenta três interfaces estáticas e navegáveis, sem API, banco de dados, autenticação ou persistência.
 
-## Funcionalidades Principais
+## Funcionalidades implementadas
 
-✅ **Gerenciamento de Disciplinas** - Criar e organizar disciplinas/tópicos de estudo  
-✅ **Planejamento de Sessões** - Agendar e acompanhar sessões de estudo no calendário  
-✅ **Gestão de Tarefas** - Criar, organizar e marcar tarefas como concluídas  
-✅ **Acompanhamento de Progresso** - Visualizar gráficos e estatísticas de desempenho  
-✅ **Sistema de Metas** - Definir metas de estudo e acompanhar conquistas  
+- Painel inicial com resumo de pendências, tarefas próximas e matérias ativas.
+- Listagem de tarefas com matéria, prazo, prioridade e status.
+- Controles estruturais de filtro por matéria, status e prioridade.
+- Formulário de cadastro de tarefa com campos rotulados e validação nativa para os obrigatórios.
+- Navegação entre todas as páginas do protótipo.
 
 ## Tecnologias
 
-### Frontend
-- **Linguagem**: JavaScript/TypeScript
-- **Framework**: React.js
-- **Estilização**: Tailwind CSS ou Material-UI
-- **Gráficos**: Chart.js ou Recharts
-- **Calendário**: React Calendar
-- **Notificações**: React Toastify
+- HTML5 semântico
+- CSS3 responsivo
 
-### Backend
-- **Linguagem**: Node.js
-- **Framework**: Express.js
-- **Autenticação**: JWT (JSON Web Tokens)
-- **Testes**: Jest
+## Como executar
 
-### Banco de Dados
-- **Banco**: PostgreSQL
-- **ORM**: Sequelize ou TypeORM
-- **Cache**: Redis (futuro)
+Não há dependências para esta etapa. Abra `src/index.html` em um navegador ou inicie um servidor estático a partir da raiz do repositório:
 
-## Arquitetura
-
-```
-FRONTEND (React.js)          BACKEND (Node.js + Express)      DATABASE (PostgreSQL)
-├─ Dashboard               ├─ API REST                       ├─ users
-├─ Calendar               ├─ Authentication                  ├─ subjects
-├─ Tasks Manager          ├─ Business Logic                  ├─ tasks
-├─ Progress Tracking      └─ Database Integration            ├─ sessions
-└─ Goals & Achievements                                      ├─ goals
-                                                              └─ achievements
+```bash
+npx serve src
 ```
 
-## Entidades Principais
+## Como testar
 
-1. **Usuário** - Identidade do aluno/estudante
-2. **Disciplina/Módulo** - Tópico ou matéria de estudo
-3. **Sessão de Estudo** - Período dedicado ao estudo
-4. **Tarefa/Atividade** - Trabalho a ser realizado
-5. **Meta** - Objetivo a alcançar
-6. **Conquista** - Badges e recompensas
+1. Abra a página inicial e use a navegação do cabeçalho.
+2. Confira a listagem em `tarefas.html`.
+3. Abra `nova-tarefa.html`, tente enviar o formulário sem preencher os campos obrigatórios e confirme a validação nativa.
 
-## Telas Principais
+O procedimento de verificação e as evidências estão em [docs/evidencias.md](docs/evidencias.md).
 
-1. **Dashboard** - Resumo gráfico do progresso geral
-2. **Calendário** - Visualização de sessões de estudo agendadas
-3. **Gerenciamento de Tarefas** - Lista de tarefas com filtros
-4. **Acompanhamento de Progresso** - Gráficos e estatísticas
-5. **Detalhes de Disciplina** - Informações específicas por disciplina
+## Limitações conhecidas
 
-## Operações Principais
+- Os dados são exemplos estáticos e não são persistidos.
+- Os filtros e o cadastro ainda não alteram a lista.
+- Não há autenticação, API, banco de dados ou testes automatizados nesta etapa.
 
-- CRUD de Disciplinas
-- CRUD de Tarefas
-- CRUD de Sessões de Estudo
-- Acompanhamento de Metas
-- Visualização de Relatórios e Gráficos
+## Documentação
 
-## Estrutura do Repositório
+- [Proposta da Etapa 01](docs/proposta.md)
+- [Documentação da Etapa 02](docs/etapa-02.md)
+- [Arquitetura e decisões técnicas](docs/arquitetura.md)
+- [Evidências de funcionamento](docs/evidencias.md)
 
+## Estrutura do repositório
+
+```text
+├── docs/     # documentação do projeto e das entregas
+├── src/      # páginas HTML e estilos
+├── tests/    # reservado para testes futuros
+└── README.md
 ```
-StudyFlow-Trab-Const-Software/
-├── docs/
-│   └── proposta.md          # Especificação detalhada da ETAPA 01
-├── README.md                # Este arquivo
-└── [Estrutura de código será adicionada nas próximas etapas]
-```
-
-## Desenvolvimento
-
-Este é um projeto em desenvolvimento incremental. A implementação seguirá as seguintes etapas:
-
-- **ETAPA 01** ✅ - Proposta e Especificação (ATUAL)
-- **ETAPA 02** - Modelagem de Dados e Arquitetura
-- **ETAPA 03** - Setup de Ambiente e Scaffolding
-- **ETAPA 04** - Implementação de Features Básicas
-- **ETAPA 05** - Implementação de Features Intermediárias
-- **ETAPA 06** - Integração Frontend-Backend
-- **ETAPA 07** - Testes e Qualidade
-- **ETAPA 08** - Deploy e Finalização
 
 ## Autor
 
-**Weber Filho** - Disciplina de Tecnologia e Construção de Software
-
-## Licença
-
-Este projeto é desenvolvido como trabalho acadêmico.
-
----
-
-**Última Atualização**: ETAPA 01 - Proposta e Especificação do Projeto
+Weber Filho - Disciplina de Tecnologia e Construção de Software

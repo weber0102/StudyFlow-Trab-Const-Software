@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Listagem de tarefas do StudyFlow.">
+    <title>StudyFlow | Tarefas</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <header class="site-header"><div class="header-content"><a class="brand" href="index.html" aria-label="StudyFlow, página inicial"><span class="brand-mark" aria-hidden="true">✓</span>StudyFlow</a><nav class="site-nav" aria-label="Navegação principal"><ul><li><a href="index.html">Início</a></li><li><a href="tarefas.html" aria-current="page">Tarefas</a></li><li><a href="nova-tarefa.html">Nova tarefa</a></li></ul></nav></div></header>
+    <main class="page-shell">
+      <section class="page-intro" aria-labelledby="page-title"><div><p class="eyebrow">Planejamento acadêmico</p><h1 id="page-title">Minhas tarefas</h1><p class="lead">Visualize as atividades cadastradas e identifique os próximos prazos.</p></div><a class="button" href="nova-tarefa.html">+ Nova tarefa</a></section>
+      <section class="panel" aria-labelledby="filter-title">
+        <header class="panel-heading"><div><h2 id="filter-title">Filtrar tarefas</h2><p>Controles demonstrativos para a futura listagem dinâmica.</p></div></header>
+        <form class="filters" action="tarefas.html" method="get">
+          <div><label for="subject-filter">Matéria</label><select id="subject-filter" name="materia"><option value="">Todas as matérias</option><option>Construção de Software</option><option>Banco de Dados</option><option>Cálculo I</option></select></div>
+          <div><label for="status-filter">Status</label><select id="status-filter" name="status"><option value="">Todos os status</option><option>Pendente</option><option>Concluída</option></select></div>
+          <div><label for="priority-filter">Prioridade</label><select id="priority-filter" name="prioridade"><option value="">Todas as prioridades</option><option>Alta</option><option>Média</option><option>Baixa</option></select></div>
+          <button type="submit">Aplicar filtros</button>
+        </form>
+      </section>
+      <section class="panel" aria-labelledby="tasks-title" style="margin-top: 1.25rem;">
+        <header class="panel-heading"><div><h2 id="tasks-title">6 tarefas encontradas</h2><p>Dados fictícios apresentados apenas para representar a interface.</p></div></header>
+        <table class="task-table"><thead><tr><th scope="col">Tarefa</th><th scope="col">Matéria</th><th scope="col">Prazo</th><th scope="col">Prioridade</th><th scope="col">Status</th></tr></thead><tbody>
+          <tr><td class="task-name">Protótipo estrutural em HTML</td><td>Construção de Software</td><td>03 set.</td><td><span class="badge danger">Alta</span></td><td><span class="badge warning">Pendente</span></td></tr>
+          <tr><td class="task-name">Documentar decisões da etapa</td><td>Construção de Software</td><td>03 set.</td><td><span class="badge warning">Média</span></td><td><span class="badge warning">Pendente</span></td></tr>
+          <tr><td class="task-name">Lista de exercícios 4</td><td>Cálculo I</td><td>05 set.</td><td><span class="badge warning">Média</span></td><td><span class="badge warning">Pendente</span></td></tr>
+          <tr><td class="task-name">Leitura do capítulo 6</td><td>Banco de Dados</td><td>08 set.</td><td><span class="badge neutral">Baixa</span></td><td><span class="badge warning">Pendente</span></td></tr>
+          <tr><td class="task-name">Revisar normalização</td><td>Banco de Dados</td><td>29 ago.</td><td><span class="badge neutral">Baixa</span></td><td><span class="badge success">Concluída</span></td></tr>
+          <tr><td class="task-name">Resumo da aula 3</td><td>Cálculo I</td><td>28 ago.</td><td><span class="badge neutral">Baixa</span></td><td><span class="badge success">Concluída</span></td></tr>
+        </tbody></table>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="footer-content"><p>StudyFlow · Protótipo da Etapa 02</p><p>Organize seus estudos com clareza.</p></div></footer>
+  </body>
+</html>

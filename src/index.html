@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Painel inicial do protótipo StudyFlow.">
+    <title>StudyFlow | Início</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-content">
+        <a class="brand" href="index.html" aria-label="StudyFlow, página inicial"><span class="brand-mark" aria-hidden="true">✓</span>StudyFlow</a>
+        <nav class="site-nav" aria-label="Navegação principal"><ul><li><a href="index.html" aria-current="page">Início</a></li><li><a href="tarefas.html">Tarefas</a></li><li><a href="nova-tarefa.html">Nova tarefa</a></li></ul></nav>
+      </div>
+    </header>
+    <main class="page-shell">
+      <section class="page-intro" aria-labelledby="page-title">
+        <div><p class="eyebrow">Seu painel de estudos</p><h1 id="page-title">Olá, Weber. Vamos organizar sua semana?</h1><p class="lead">Acompanhe as tarefas acadêmicas, os prazos e o andamento do seu plano de estudos em um só lugar.</p></div>
+        <a class="button" href="nova-tarefa.html">+ Adicionar tarefa</a>
+      </section>
+      <aside class="notice" aria-label="Aviso sobre o protótipo"><strong>Protótipo estrutural:</strong> as informações abaixo são exemplos visuais e ainda não são persistidas.</aside>
+      <section class="stats-grid" aria-label="Resumo das tarefas">
+        <article class="card stat-card"><p class="stat-label">Tarefas pendentes</p><p class="stat-value">5</p><p class="stat-detail">3 com prazo nesta semana</p></article>
+        <article class="card stat-card"><p class="stat-label">Concluídas neste mês</p><p class="stat-value">12</p><p class="stat-detail">Bom ritmo de estudos</p></article>
+        <article class="card stat-card"><p class="stat-label">Próximo prazo</p><p class="stat-value">2 dias</p><p class="stat-detail">Trabalho de Construção de Software</p></article>
+      </section>
+      <section class="content-grid" aria-label="Detalhes do painel">
+        <article class="panel" aria-labelledby="upcoming-title">
+          <header class="panel-heading"><div><h2 id="upcoming-title">Próximas tarefas</h2><p>Ordenadas pelos prazos mais próximos.</p></div><a class="button secondary" href="tarefas.html">Ver todas</a></header>
+          <ul class="task-list">
+            <li><input class="task-check" type="checkbox" aria-label="Marcar protótipo estrutural como concluído"><div class="task-copy"><a href="tarefas.html">Protótipo estrutural em HTML</a><p>Construção de Software · Entrega em 03 set.</p></div><span class="badge danger">Prioridade alta</span></li>
+            <li><input class="task-check" type="checkbox" aria-label="Marcar lista de exercícios como concluída"><div class="task-copy"><a href="tarefas.html">Lista de exercícios 4</a><p>Cálculo I · Entrega em 05 set.</p></div><span class="badge warning">Prioridade média</span></li>
+            <li><input class="task-check" type="checkbox" aria-label="Marcar leitura do capítulo como concluída"><div class="task-copy"><a href="tarefas.html">Leitura do capítulo 6</a><p>Banco de Dados · Entrega em 08 set.</p></div><span class="badge neutral">Prioridade baixa</span></li>
+          </ul>
+        </article>
+        <aside class="panel" aria-labelledby="subjects-title"><header class="panel-heading"><h2 id="subjects-title">Matérias ativas</h2></header><ul class="plain-list"><li><strong>Construção de Software</strong><span>2 tarefas pendentes</span></li><li><strong>Banco de Dados</strong><span>1 tarefa pendente</span></li><li><strong>Cálculo I</strong><span>2 tarefas pendentes</span></li></ul></aside>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="footer-content"><p>StudyFlow · Protótipo da Etapa 02</p><p>Organize seus estudos com clareza.</p></div></footer>
+  </body>
+</html>
