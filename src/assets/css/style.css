@@ -102,7 +102,9 @@ h2 { margin-bottom: 0; font-size: clamp(1.2rem, 2vw, 1.5rem); letter-spacing: -0
 h3 { margin-bottom: 0; font-size: 1rem; }
 .header-content, .page-shell, .footer-content { width: min(var(--content-width), calc(100% - 3rem)); margin-inline: auto; }
 .page-shell { padding-block: clamp(2rem, 5vw, 4.5rem) 4rem; }
-.page-intro { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); margin-bottom: var(--space-8); }
+.page-intro { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); margin-bottom: var(--space-8); padding: clamp(1.5rem, 4vw, 3rem); overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-lg); background: linear-gradient(112deg, var(--surface-solid), color-mix(in srgb, var(--primary-soft) 48%, var(--surface-solid))); box-shadow: var(--shadow-md); isolation: isolate; }
+.page-intro::after { position: absolute; z-index: -1; width: 20rem; height: 20rem; right: -9rem; bottom: -13rem; border: 2.75rem solid color-mix(in srgb, var(--cyan) 25%, transparent); border-radius: 50%; content: ""; }
+.page-intro > div { max-width: 46rem; }
 .eyebrow { margin-bottom: var(--space-3); color: var(--primary); font-size: 0.73rem; font-weight: 850; letter-spacing: 0.15em; text-transform: uppercase; }
 .lead { max-width: 43rem; margin: var(--space-4) 0 0; color: var(--muted); font-size: 1.05rem; }
 .content-grid, .form-layout, .stats-grid, .filters, .field-grid { display: grid; gap: var(--space-5); }
