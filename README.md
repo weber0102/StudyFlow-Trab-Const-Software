@@ -8,7 +8,7 @@ Quem cursa várias disciplinas precisa conciliar trabalhos, exercícios e leitur
 
 ## Etapa atual
 
-**Etapa 02 - Protótipo estrutural com HTML semântico.** Esta entrega apresenta três interfaces estáticas e navegáveis, sem API, banco de dados, autenticação ou persistência.
+**Etapa 03 - Interface responsiva com CSS.** Esta entrega aprimora as três interfaces estáticas e navegáveis com uma identidade visual consistente, Flexbox, CSS Grid e comportamento responsivo para desktop, tablet e smartphone. A aplicação continua sem API, banco de dados, autenticação ou persistência.
 
 ## Funcionalidades implementadas
 
@@ -17,11 +17,13 @@ Quem cursa várias disciplinas precisa conciliar trabalhos, exercícios e leitur
 - Controles estruturais de filtro por matéria, status e prioridade.
 - Formulário de cadastro de tarefa com campos rotulados e validação nativa para os obrigatórios.
 - Navegação entre todas as páginas do protótipo.
+- Interface responsiva testada em 1440 x 900 px, 768 x 1024 px e 390 x 844 px.
+- Menu, cards, filtros, formulário e tabela adaptados para telas menores.
 
 ## Tecnologias
 
 - HTML5 semântico
-- CSS3 responsivo
+- CSS3 com Flexbox, CSS Grid e media queries
 
 ## Como executar
 
@@ -49,6 +51,7 @@ O procedimento de verificação e as evidências estão em [docs/evidencias.md](
 
 - [Proposta da Etapa 01](docs/proposta.md)
 - [Documentação da Etapa 02](docs/etapa-02.md)
+- [Documentação da Etapa 03](docs/etapa-03.md)
 - [Arquitetura e decisões técnicas](docs/arquitetura.md)
 - [Evidências de funcionamento](docs/evidencias.md)
 
