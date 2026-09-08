@@ -67,6 +67,14 @@
   };
 
   document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('a[href$=".html"]').forEach((link) => {
+      const destination = new URL(link.href, window.location.href);
+      if (destination.origin === window.location.origin) {
+        destination.searchParams.set("v", "subjects-2");
+        link.href = destination.toString();
+      }
+    });
+
     populateSubjectSelects();
     renderSubjects();
 
