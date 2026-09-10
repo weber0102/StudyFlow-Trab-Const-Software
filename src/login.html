@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Acesso à conta demonstrativa do StudyFlow.">
+    <title>StudyFlow | Entrar</title>
+    <link rel="stylesheet" href="assets/css/style.css?v=menu-1">
+    <link rel="stylesheet" href="assets/css/components.css?v=auth-1">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=menu-2">
+    <script src="assets/js/theme.js?v=brand-1" defer></script>
+    <script src="assets/js/navigation.js?v=menu-1" defer></script>
+    <script src="assets/js/auth.js?v=auth-1" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-content">
+        <button class="menu-toggle" type="button" data-menu-toggle aria-label="Abrir menu de navegação" aria-expanded="false"><span data-menu-icon aria-hidden="true">☰</span><span class="sr-only">Menu</span></button>
+        <a class="brand" href="index.html" aria-label="StudyFlow, página inicial"><span class="brand-mark" aria-hidden="true"><img class="brand-logo brand-logo--light" src="assets/img/studyflow-mark-light.png" alt=""><img class="brand-logo brand-logo--dark" src="assets/img/studyflow-mark-dark.png" alt=""></span><span class="brand-name"><span>Study</span><span class="brand-flow">Flow</span></span></a>
+        <nav class="site-nav" aria-label="Navegação principal"><ul><li><a href="index.html"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-label">Início</span></a></li><li><a href="tarefas.html"><span class="nav-icon" aria-hidden="true">✓</span><span class="nav-label">Tarefas</span></a></li><li><a href="materias.html"><span class="nav-icon" aria-hidden="true">▦</span><span class="nav-label">Matérias</span></a></li><li><a href="nova-tarefa.html"><span class="nav-icon" aria-hidden="true">＋</span><span class="nav-label">Nova tarefa</span></a></li><li><a href="login.html" class="account-link" aria-current="page"><span class="nav-icon" aria-hidden="true">◎</span><span class="nav-label" data-account-label>Entrar</span></a></li></ul></nav>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Ativar tema escuro" aria-pressed="false"><span class="theme-toggle__icon" aria-hidden="true">☾</span><span class="theme-toggle__label">Escuro</span></button>
+      </div>
+    </header>
+    <main class="page-shell auth-shell">
+      <section class="auth-layout" aria-labelledby="auth-title">
+        <aside class="auth-hero">
+          <p class="eyebrow">Área do aluno</p>
+          <h1 id="auth-title">Seu planejamento, no seu ritmo.</h1>
+          <p class="lead">Entre para personalizar a saudação e manter a sua sessão de estudos neste navegador.</p>
+          <ul class="auth-benefits"><li><span aria-hidden="true">✓</span> Acesse rapidamente suas matérias e tarefas.</li><li><span aria-hidden="true">✓</span> Use o tema claro ou escuro que preferir.</li><li><span aria-hidden="true">✓</span> Continue de onde parou neste dispositivo.</li></ul>
+          <p class="auth-local-note"><strong>Modo demonstrativo:</strong> esta conta fica armazenada somente neste navegador. Não use uma senha real.</p>
+        </aside>
+        <section class="card auth-card" aria-label="Acesso à conta">
+          <div data-auth-forms>
+            <div class="auth-tabs" role="tablist" aria-label="Opções de acesso"><button type="button" role="tab" aria-selected="true" aria-controls="login-panel" id="login-tab" data-auth-tab="login">Entrar</button><button type="button" role="tab" aria-selected="false" aria-controls="register-panel" id="register-tab" data-auth-tab="register" tabindex="-1">Criar conta</button></div>
+            <form id="login-panel" data-auth-panel="login" data-login-form aria-labelledby="login-tab"><h2>Bem-vindo de volta</h2><p class="field-help">Use o e-mail e a senha cadastrados neste navegador.</p><div class="field"><label for="login-email">E-mail acadêmico</label><input id="login-email" name="email" type="email" autocomplete="email" placeholder="voce@universidade.edu.br" required></div><div class="field"><label for="login-password">Senha</label><input id="login-password" name="password" type="password" autocomplete="current-password" minlength="6" required></div><button type="submit">Entrar na minha conta</button></form>
+            <form id="register-panel" data-auth-panel="register" data-register-form aria-labelledby="register-tab" hidden><h2>Crie sua conta</h2><p class="field-help">Cadastre um acesso demonstrativo para este dispositivo.</p><div class="field"><label for="register-name">Nome</label><input id="register-name" name="name" type="text" autocomplete="name" maxlength="50" placeholder="Como quer ser chamado?" required></div><div class="field"><label for="register-email">E-mail acadêmico</label><input id="register-email" name="email" type="email" autocomplete="email" placeholder="voce@universidade.edu.br" required></div><div class="field"><label for="register-password">Crie uma senha</label><input id="register-password" name="password" type="password" autocomplete="new-password" minlength="6" required><p class="field-help">Mínimo de 6 caracteres. Não use sua senha pessoal.</p></div><div class="field"><label for="register-password-confirmation">Confirme a senha</label><input id="register-password-confirmation" name="passwordConfirmation" type="password" autocomplete="new-password" minlength="6" required></div><button type="submit">Criar conta e entrar</button></form>
+            <p class="form-feedback" data-auth-feedback aria-live="polite"></p>
+          </div>
+          <section class="auth-session" data-auth-session hidden aria-live="polite"><span class="auth-session__icon" aria-hidden="true">✓</span><p class="eyebrow">Sessão ativa</p><h2>Olá, <span data-auth-session-name></span>!</h2><p>Você já está conectado neste navegador.</p><a class="button" href="index.html">Ir para meu painel</a><button class="button secondary" type="button" data-logout>Sair desta conta</button></section>
+        </section>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="footer-content"><p>StudyFlow · Acesso demonstrativo</p><p>Contas reais exigem uma autenticação com servidor.</p></div></footer>
+  </body>
+</html>

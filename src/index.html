@@ -11,19 +11,20 @@
     <script src="assets/js/theme.js?v=brand-1" defer></script>
     <script src="assets/js/subjects.js?v=subjects-2" defer></script>
     <script src="assets/js/navigation.js?v=menu-1" defer></script>
+    <script src="assets/js/auth.js?v=auth-1" defer></script>
   </head>
   <body>
     <header class="site-header">
       <div class="header-content">
         <button class="menu-toggle" type="button" data-menu-toggle aria-label="Abrir menu de navegação" aria-expanded="false"><span data-menu-icon aria-hidden="true">☰</span><span class="sr-only">Menu</span></button>
         <a class="brand" href="index.html" aria-label="StudyFlow, página inicial"><span class="brand-mark" aria-hidden="true"><img class="brand-logo brand-logo--light" src="assets/img/studyflow-mark-light.png" alt=""><img class="brand-logo brand-logo--dark" src="assets/img/studyflow-mark-dark.png" alt=""></span><span class="brand-name"><span>Study</span><span class="brand-flow">Flow</span></span></a>
-        <nav class="site-nav" aria-label="Navegação principal"><ul><li><a href="index.html" aria-current="page"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-label">Início</span></a></li><li><a href="tarefas.html"><span class="nav-icon" aria-hidden="true">✓</span><span class="nav-label">Tarefas</span></a></li><li><a href="materias.html"><span class="nav-icon" aria-hidden="true">▦</span><span class="nav-label">Matérias</span></a></li><li><a href="nova-tarefa.html"><span class="nav-icon" aria-hidden="true">＋</span><span class="nav-label">Nova tarefa</span></a></li></ul></nav>
+        <nav class="site-nav" aria-label="Navegação principal"><ul><li><a href="index.html" aria-current="page"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-label">Início</span></a></li><li><a href="tarefas.html"><span class="nav-icon" aria-hidden="true">✓</span><span class="nav-label">Tarefas</span></a></li><li><a href="materias.html"><span class="nav-icon" aria-hidden="true">▦</span><span class="nav-label">Matérias</span></a></li><li><a href="nova-tarefa.html"><span class="nav-icon" aria-hidden="true">＋</span><span class="nav-label">Nova tarefa</span></a></li><li><a href="login.html" class="account-link"><span class="nav-icon" aria-hidden="true">◎</span><span class="nav-label" data-account-label>Entrar</span></a></li></ul></nav>
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="Ativar tema escuro" aria-pressed="false"><span class="theme-toggle__icon" aria-hidden="true">☾</span><span class="theme-toggle__label">Escuro</span></button>
       </div>
     </header>
     <main class="page-shell">
       <section class="page-intro" aria-labelledby="page-title">
-        <div><p class="eyebrow">Seu painel de estudos</p><h1 id="page-title">Olá, Weber. Vamos organizar sua semana?</h1><p class="lead">Acompanhe as tarefas acadêmicas, os prazos e o andamento do seu plano de estudos em um só lugar.</p></div>
+        <div><p class="eyebrow">Seu painel de estudos</p><h1 id="page-title">Olá, <span data-student-name>Weber</span>. Vamos organizar sua semana?</h1><p class="lead">Acompanhe as tarefas acadêmicas, os prazos e o andamento do seu plano de estudos em um só lugar.</p></div>
         <a class="button" href="nova-tarefa.html">+ Adicionar tarefa</a>
       </section>
       <aside class="notice" aria-label="Aviso sobre o protótipo"><strong>Protótipo estrutural:</strong> as informações abaixo são exemplos visuais e ainda não são persistidas.</aside>

@@ -16,7 +16,8 @@
   }
 
   .content-grid,
-  .form-layout {
+  .form-layout,
+  .auth-layout {
     grid-template-columns: 1fr;
   }
 
@@ -75,6 +76,13 @@
   .page-shell {
     padding-block: var(--space-6) var(--space-8);
   }
+
+  .auth-shell { display: block; min-height: 0; }
+
+  .auth-layout { gap: var(--space-4); }
+
+  .auth-hero,
+  .auth-card { padding: var(--space-5); }
 
   .page-intro {
     flex-direction: column;
