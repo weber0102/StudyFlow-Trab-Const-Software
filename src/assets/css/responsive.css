@@ -242,6 +242,10 @@
     content: "";
   }
 
+  /* O blur do cabeçalho cria um contexto para elementos fixos no Safari.
+     Sem esta regra, a gaveta fica limitada à altura do cabeçalho. */
+  html[data-menu-open="true"] .site-header { backdrop-filter: none; }
+
   html[data-menu-open="true"] .menu-toggle {
     position: relative;
     z-index: 22;
@@ -251,10 +255,12 @@
     position: fixed;
     z-index: 21;
     top: 0;
-    bottom: 0;
+    bottom: auto;
     left: 0;
     display: block;
     width: min(20rem, 88vw);
+    height: 100dvh;
+    min-height: 100vh;
     margin: 0;
     padding: 5.75rem var(--space-4) var(--space-6);
     border-right: 1px solid var(--border);
