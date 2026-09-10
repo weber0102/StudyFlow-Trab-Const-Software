@@ -208,3 +208,78 @@
     gap: var(--space-2);
   }
 }
+
+/* ==========================
+   MENU EM GAVETA - TABLET E SMARTPHONE
+========================== */
+
+@media (max-width: 69.999rem) {
+  .header-content {
+    min-height: 4.75rem;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+  }
+
+  .menu-toggle { flex: 0 0 auto; }
+
+  .brand { align-self: auto; font-size: 1.2rem; }
+
+  .brand-mark { width: 2.5rem; height: 2.5rem; }
+
+  .site-nav { display: none; }
+
+  .theme-toggle { align-self: auto; margin-left: auto; }
+
+  html[data-menu-open="true"] body { overflow: hidden; }
+
+  html[data-menu-open="true"] .site-header::before {
+    position: fixed;
+    z-index: 20;
+    inset: 0;
+    background: rgb(6 10 25 / 55%);
+    content: "";
+  }
+
+  html[data-menu-open="true"] .menu-toggle {
+    position: relative;
+    z-index: 22;
+  }
+
+  html[data-menu-open="true"] .site-nav {
+    position: fixed;
+    z-index: 21;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: min(20rem, 88vw);
+    margin: 0;
+    padding: 5.75rem var(--space-4) var(--space-6);
+    border-right: 1px solid var(--border);
+    background: var(--surface-solid);
+    box-shadow: 24px 0 50px rgb(11 17 38 / 28%);
+    overflow-y: auto;
+  }
+
+  html[data-menu-open="true"] .site-nav::before {
+    display: block;
+    margin: 0 var(--space-2) var(--space-4);
+    color: var(--muted);
+    content: "MENU";
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+  }
+
+  html[data-menu-open="true"] .site-nav ul { flex-direction: column; gap: var(--space-2); }
+
+  html[data-menu-open="true"] .site-nav a {
+    display: flex;
+    align-items: center;
+    min-height: 3rem;
+    padding-inline: var(--space-4);
+    font-size: 1rem;
+  }
+}
