@@ -28,6 +28,11 @@
   .filters button {
     width: fit-content;
   }
+
+  .task-filter-form .filter-search,
+  .task-filter-form .filter-actions {
+    grid-column: span 2;
+  }
 }
 
 /* ==========================
@@ -179,9 +184,9 @@
   .task-table tr {
     margin-bottom: var(--space-3);
     padding: var(--space-3);
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    background: var(--color-surface);
+    background: var(--surface);
     box-shadow: var(--shadow-sm);
   }
 
@@ -195,12 +200,12 @@
     gap: var(--space-3);
     padding: var(--space-2) 0;
     border: 0;
-    color: var(--color-text);
+    color: var(--ink);
   }
 
   .task-table td::before {
     content: attr(data-label);
-    color: var(--color-muted);
+    color: var(--muted);
     font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.03em;
@@ -209,6 +214,39 @@
 
   .task-table .badge {
     justify-self: start;
+  }
+
+  .task-filter-form .filter-search,
+  .task-filter-form .filter-actions {
+    grid-column: auto;
+    flex-direction: column;
+  }
+
+  .task-filter-form .filter-actions button,
+  .task-actions .task-action {
+    width: 100%;
+  }
+
+  .task-actions {
+    align-items: stretch;
+  }
+
+  .task-modal {
+    align-items: end;
+    padding: var(--space-3);
+  }
+
+  .task-modal__dialog {
+    width: 100%;
+    padding: var(--space-5);
+  }
+
+  .task-modal__actions {
+    flex-direction: column-reverse;
+  }
+
+  .task-modal__actions .button {
+    width: 100%;
   }
 
   .footer-content {

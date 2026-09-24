@@ -3,35 +3,36 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Formulário de cadastro de tarefa do StudyFlow.">
+    <meta name="description" content="Formulário interativo para cadastro de tarefas no StudyFlow.">
     <title>StudyFlow | Nova tarefa</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=menu-1">
-    <link rel="stylesheet" href="assets/css/components.css?v=menu-1">
-    <link rel="stylesheet" href="assets/css/responsive.css?v=menu-2">
+    <link rel="stylesheet" href="assets/css/style.css?v=tasks-1">
+    <link rel="stylesheet" href="assets/css/components.css?v=tasks-1">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=tasks-1">
     <script src="assets/js/theme.js?v=brand-1" defer></script>
     <script src="assets/js/subjects.js?v=subjects-2" defer></script>
     <script src="assets/js/navigation.js?v=menu-1" defer></script>
     <script src="assets/js/auth.js?v=auth-1" defer></script>
+    <script src="assets/js/tarefas.js?v=stage4-1" defer></script>
   </head>
   <body>
     <header class="site-header"><div class="header-content"><button class="menu-toggle" type="button" data-menu-toggle aria-label="Abrir menu de navegação" aria-expanded="false"><span data-menu-icon aria-hidden="true">☰</span><span class="sr-only">Menu</span></button><a class="brand" href="index.html" aria-label="StudyFlow, página inicial"><span class="brand-mark" aria-hidden="true"><img class="brand-logo brand-logo--light" src="assets/img/studyflow-mark-light.png" alt=""><img class="brand-logo brand-logo--dark" src="assets/img/studyflow-mark-dark.png" alt=""></span><span class="brand-name"><span>Study</span><span class="brand-flow">Flow</span></span></a><nav class="site-nav" aria-label="Navegação principal"><ul><li><a href="index.html"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-label">Início</span></a></li><li><a href="tarefas.html"><span class="nav-icon" aria-hidden="true">✓</span><span class="nav-label">Tarefas</span></a></li><li><a href="materias.html"><span class="nav-icon" aria-hidden="true">▦</span><span class="nav-label">Matérias</span></a></li><li><a href="nova-tarefa.html" aria-current="page"><span class="nav-icon" aria-hidden="true">＋</span><span class="nav-label">Nova tarefa</span></a></li><li><a href="login.html" class="account-link"><span class="nav-icon" aria-hidden="true">◎</span><span class="nav-label" data-account-label>Entrar</span></a></li></ul></nav><button class="theme-toggle" type="button" data-theme-toggle aria-label="Ativar tema escuro" aria-pressed="false"><span class="theme-toggle__icon" aria-hidden="true">☾</span><span class="theme-toggle__label">Escuro</span></button></div></header>
     <main class="page-shell">
-      <section class="page-intro" aria-labelledby="page-title"><div><p class="eyebrow">Planeje uma atividade</p><h1 id="page-title">Cadastrar nova tarefa</h1><p class="lead">Registre a atividade, a matéria associada e seu prazo para manter o planejamento em dia.</p></div></section>
+      <section class="page-intro" aria-labelledby="page-title"><div><p class="eyebrow">Planeje uma atividade</p><h1 id="page-title">Cadastrar nova tarefa</h1><p class="lead">Registre uma atividade e acompanhe-a no painel e na lista de tarefas.</p></div></section>
       <div class="form-layout">
         <section class="card form-card" aria-labelledby="form-title">
           <h2 id="form-title">Dados da tarefa</h2>
-          <form action="tarefas.html" method="get">
-            <div class="field"><label for="title">Título da tarefa</label><input id="title" name="titulo" type="text" placeholder="Ex.: Entregar lista de exercícios" required><p class="field-help">Use um título curto e fácil de identificar.</p></div>
-            <div class="field"><label for="subject">Matéria</label><select id="subject" name="materia" data-subject-select required><option value="" selected disabled data-placeholder>Selecione uma matéria</option></select><p class="field-help">Não encontrou a matéria? <a class="inline-link" href="materias.html">Cadastre uma nova disciplina</a>.</p></div>
-            <div class="field"><label for="description">Descrição</label><textarea id="description" name="descricao" placeholder="Inclua instruções ou observações importantes."></textarea></div>
-            <div class="field-grid"><div class="field"><label for="due-date">Data de entrega</label><input id="due-date" name="prazo" type="date" required></div><div class="field"><label for="priority">Prioridade</label><select id="priority" name="prioridade" required><option value="media">Média</option><option value="alta">Alta</option><option value="baixa">Baixa</option></select></div></div>
+          <form data-task-form novalidate>
+            <div class="field"><label for="title">Título da tarefa</label><input id="title" name="title" type="text" maxlength="100" placeholder="Ex.: Entregar lista de exercícios" required><p class="field-help">Use pelo menos 3 caracteres e evite títulos duplicados para a mesma matéria e prazo.</p></div>
+            <div class="field"><label for="subject">Matéria</label><select id="subject" name="subject" data-subject-select required><option value="" selected disabled data-placeholder>Selecione uma matéria</option></select><p class="field-help">Não encontrou a matéria? <a class="inline-link" href="materias.html">Cadastre uma nova disciplina</a>.</p></div>
+            <div class="field"><label for="description">Descrição</label><textarea id="description" name="description" maxlength="500" placeholder="Inclua instruções ou observações importantes."></textarea><p class="field-help">Opcional, com limite de 500 caracteres.</p></div>
+            <div class="field-grid"><div class="field"><label for="due-date">Data de entrega</label><input id="due-date" name="dueDate" type="date" required></div><div class="field"><label for="priority">Prioridade</label><select id="priority" name="priority" required><option value="media">Média</option><option value="alta">Alta</option><option value="baixa">Baixa</option></select></div></div>
             <div class="field"><label for="status">Status inicial</label><select id="status" name="status"><option value="pendente">Pendente</option><option value="concluida">Concluída</option></select></div>
-            <div class="form-actions"><button type="submit">Salvar tarefa</button><a class="button secondary" href="tarefas.html">Cancelar</a></div>
+            <div class="form-actions"><button type="submit">Salvar tarefa</button><a class="button secondary" href="tarefas.html">Cancelar</a></div><p class="form-feedback" data-task-feedback aria-live="polite"></p>
           </form>
         </section>
-        <aside class="card side-note" aria-labelledby="help-title"><h2 id="help-title">Antes de salvar</h2><p>As matérias cadastradas são mantidas neste navegador e podem ser reutilizadas em quantas tarefas forem necessárias.</p><ul><li>Todos os campos obrigatórios possuem indicação nativa do navegador.</li><li>Cada campo tem um rótulo associado.</li><li>Gerencie suas disciplinas em <a class="inline-link" href="materias.html">Matérias</a>.</li></ul></aside>
+        <aside class="card side-note" aria-labelledby="help-title"><h2 id="help-title">Como funciona</h2><p>Ao salvar, a tarefa passa a fazer parte da lista e atualiza os indicadores do painel neste navegador.</p><ul><li>O formulário valida título, matéria, data, prioridade e duplicidade.</li><li>As tarefas são salvas localmente no navegador.</li><li>Gerencie suas disciplinas em <a class="inline-link" href="materias.html">Matérias</a>.</li></ul></aside>
       </div>
     </main>
-    <footer class="site-footer"><div class="footer-content"><p>StudyFlow · Protótipo da Etapa 02</p><p>Organize seus estudos com clareza.</p></div></footer>
+    <footer class="site-footer"><div class="footer-content"><p>StudyFlow · Etapa 04</p><p>Organize seus estudos com clareza.</p></div></footer>
   </body>
 </html>

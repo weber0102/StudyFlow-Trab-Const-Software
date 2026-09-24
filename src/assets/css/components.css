@@ -133,3 +133,36 @@ input, select { min-height: 2.85rem; padding: 0.6rem 0.8rem; }textarea { min-hei
   html[data-sidebar="collapsed"] .site-nav a[aria-current="page"]::before { left: -0.75rem; }
   html[data-sidebar="collapsed"] .theme-toggle { justify-content: center; width: 2.65rem; padding: 0; }
 }
+
+/* ==========================
+   INTERATIVIDADE DE TAREFAS
+========================== */
+
+.task-panel { margin-top: var(--space-5); }
+.task-filter-form { grid-template-columns: repeat(4, minmax(0, 1fr)); padding: var(--space-5); }
+.filter-search { grid-column: span 2; min-width: 0; }
+.filter-actions { display: flex; grid-column: span 2; flex-wrap: wrap; align-items: flex-end; gap: var(--space-2); }
+.filter-actions button { min-height: 2.85rem; }
+.task-list-feedback:empty, .dashboard-feedback:empty { display: none; }
+.task-list-feedback { margin: var(--space-4) var(--space-5) 0; padding: var(--space-3) var(--space-4); border: 1px solid transparent; border-radius: var(--radius-sm); background: var(--surface-raised); }
+.task-list-feedback.is-success, .dashboard-feedback.is-success { border-color: color-mix(in srgb, var(--success) 35%, var(--border)); background: var(--success-soft); }
+.task-list-feedback.is-error, .dashboard-feedback.is-error { border-color: color-mix(in srgb, var(--danger) 35%, var(--border)); background: var(--danger-soft); }
+.dashboard-feedback { margin: var(--space-3) var(--space-5) var(--space-4); padding: var(--space-3) var(--space-4); border: 1px solid transparent; border-radius: var(--radius-sm); background: var(--surface-raised); }
+.empty-state { margin: var(--space-5); padding: var(--space-4); border: 1px dashed var(--border-strong); border-radius: var(--radius-md); background: var(--surface-raised); color: var(--muted); font-weight: 700; text-align: center; }
+.is-invalid { border-color: var(--danger) !important; box-shadow: 0 0 0 4px color-mix(in srgb, var(--danger) 14%, transparent) !important; }
+.dynamic-empty-item { color: var(--muted); font-weight: 700; }
+
+.task-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.task-actions-cell { min-width: 11.5rem; }
+.task-action { min-height: 2.25rem; padding: 0.45rem 0.7rem; border-color: var(--border); background: var(--surface-raised); box-shadow: none; color: var(--ink); font-size: 0.78rem; }
+.task-action:hover { border-color: var(--border-strong); background: var(--surface-solid); box-shadow: var(--shadow-sm); color: var(--primary-deep); transform: none; }
+.task-action--danger { border-color: color-mix(in srgb, var(--danger) 28%, var(--border)); background: var(--danger-soft); box-shadow: none; color: var(--danger); }
+.task-action--danger:hover { border-color: var(--danger); background: var(--danger-soft); box-shadow: none; color: var(--danger); transform: none; }
+
+.task-modal { position: fixed; z-index: 60; inset: 0; display: grid; place-items: center; padding: var(--space-5); background: rgb(5 10 28 / 58%); }
+.task-modal[hidden] { display: none; }
+.task-modal__dialog { width: min(100%, 30rem); padding: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-solid); box-shadow: var(--shadow-md); }
+.task-modal__dialog h2 { margin-bottom: var(--space-3); }
+.task-modal__dialog p { margin-bottom: 0; color: var(--muted); }
+.task-modal__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-6); }
+body.modal-open { overflow: hidden; }
