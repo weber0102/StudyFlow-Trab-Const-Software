@@ -143,8 +143,8 @@
     padding: var(--space-4);
   }
 
-  .task-check {
-    margin-top: 0.2rem;
+  .task-open {
+    margin-top: 0.1rem;
   }
 
   .task-list .badge {
@@ -239,6 +239,10 @@
   .task-modal__dialog {
     width: 100%;
     padding: var(--space-5);
+  }
+
+  .task-details {
+    grid-template-columns: 1fr;
   }
 
   .task-modal__actions {

@@ -10,12 +10,12 @@ Os dados são guardados no `localStorage` do navegador, na chave `studyflow-task
 
 | Caminho | Responsabilidade |
 | --- | --- |
-| `/src/assets/js/tarefas.js` | Gerencia o estado das tarefas, a validação, o cadastro, a busca, os filtros, a ordenação, a alteração de status, o modal de exclusão e o painel dinâmico. |
+| `/src/assets/js/tarefas.js` | Gerencia o estado das tarefas, a validação, o cadastro, a busca, os filtros, a ordenação, a alteração de status, os modais de exclusão e detalhes e o painel dinâmico. |
 | `/src/nova-tarefa.html` | Contém o formulário de cadastro e a região de feedback acessível da tarefa. |
 | `/src/tarefas.html` | Contém a busca, os filtros, a ordenação, a lista de tarefas e as ações de concluir/reabrir/excluir. |
-| `/src/index.html` | Exibe indicadores, próximas tarefas e matérias ativas atualizados a partir das tarefas salvas. |
-| `/src/assets/css/components.css` | Estiliza mensagens, ações das tarefas, estado vazio e modal de confirmação. |
-| `/src/assets/css/responsive.css` | Mantém filtros, lista, ações e modal utilizáveis em tablet e smartphone. |
+| `/src/index.html` | Exibe indicadores, próximas tarefas com botão para abrir detalhes e matérias ativas atualizados a partir das tarefas salvas. |
+| `/src/assets/css/components.css` | Estiliza mensagens, ações das tarefas, estado vazio e modais de confirmação e detalhes. |
+| `/src/assets/css/responsive.css` | Mantém filtros, lista, ações e modais utilizáveis em tablet e smartphone. |
 | `/src/assets/js/subjects.js` | Funcionalidade preservada: fornece as matérias cadastradas para os selects. |
 | `/src/assets/js/theme.js`, `/src/assets/js/navigation.js` e `/src/assets/js/auth.js` | Funcionalidades preservadas das etapas anteriores: tema, menu e conta demonstrativa. |
 
@@ -60,7 +60,7 @@ O JavaScript novo foi concentrado em `tarefas.js` para manter, no mesmo arquivo,
 
 **Descrição:** permite alterar uma tarefa entre os estados pendente e concluída.
 
-**Como funciona:** ao clicar em “Concluir” ou “Reabrir”, `toggleTaskStatus()` procura a tarefa com `find()`, cria o array atualizado com `map()`, persiste a alteração e chama `refreshTaskInterfaces()`. A função atualiza a tabela, as próximas tarefas, os indicadores e as matérias ativas do painel.
+**Como funciona:** na página `tarefas.html`, ao clicar em “Concluir” ou “Reabrir”, `toggleTaskStatus()` procura a tarefa com `find()`, cria o array atualizado com `map()`, persiste a alteração e chama `refreshTaskInterfaces()`. A função atualiza a tabela, as próximas tarefas, os indicadores e as matérias ativas do painel.
 
 **Arquivos envolvidos:**
 
@@ -72,7 +72,24 @@ O JavaScript novo foi concentrado em `tarefas.js` para manter, no mesmo arquivo,
 
 **Como testar:** na listagem, conclua uma tarefa e confirme a mudança do selo de status e do contador. Recarregue a página para confirmar a persistência. Em seguida, use “Reabrir” para retornar a tarefa ao acompanhamento.
 
-### 3.4 Exclusão de tarefa com confirmação em modal
+### 3.4 Abertura de detalhes pelo painel
+
+**Descrição:** permite consultar uma próxima tarefa diretamente no painel, sem transformar essa consulta em uma alteração de status.
+
+**Como funciona:** no painel, o botão ↗ de cada próxima tarefa chama `openTaskDetails()`. A função localiza o item com `find()`, preenche o diálogo criado por `ensureTaskDetailsModal()` e mantém o status inalterado. O diálogo fecha por **Fechar**, clique no fundo ou `Escape`, e oferece o atalho **Gerenciar tarefas** para a página com ações de status.
+
+**Arquivos envolvidos:**
+
+- `/src/index.html`
+- `/src/assets/js/tarefas.js`
+- `/src/assets/css/components.css`
+- `/src/assets/css/responsive.css`
+
+**Conceitos JavaScript utilizados:** evento `click`, `find()`, `textContent`, `replaceChildren()`, `hidden`, criação de elementos, foco e manipulação do DOM.
+
+**Como testar:** no painel inicial, clique no botão ↗ de uma tarefa. Confira título, matéria, prazo, prioridade e status; feche o diálogo por **Fechar** e por `Escape`, e confirme que o status da tarefa não mudou.
+
+### 3.5 Exclusão de tarefa com confirmação em modal
 
 **Descrição:** remove uma tarefa somente após uma confirmação explícita do usuário.
 
@@ -93,14 +110,14 @@ O JavaScript novo foi concentrado em `tarefas.js` para manter, no mesmo arquivo,
 
 | Conceito | Onde foi utilizado | Como verificar |
 | --- | --- | --- |
-| Manipulação do DOM | `renderTaskTable()`, `renderDashboard()`, `renderSubjectSummary()`, `ensureDeleteModal()` e funções auxiliares de criação de células, badges e ações. | Consulte `/src/assets/js/tarefas.js` e abra `tarefas.html`; as linhas, badges, contador e modal são inseridos/atualizados pelo script. |
-| Tratamento de eventos | Formulário de tarefa, controles de busca/filtro/ordenação, botões da tabela, checkboxes do painel, modal, tecla `Escape` e evento `storage`. | Consulte os `addEventListener()` em `/src/assets/js/tarefas.js`. |
-| Funções | Funções de leitura e persistência, validação, renderização, filtro, status e exclusão. | Consulte `getTasks()`, `saveTasks()`, `validateTask()`, `renderTaskTable()`, `toggleTaskStatus()` e `confirmTaskDeletion()` em `/src/assets/js/tarefas.js`. |
+| Manipulação do DOM | `renderTaskTable()`, `renderDashboard()`, `renderSubjectSummary()`, `ensureTaskDetailsModal()`, `ensureDeleteModal()` e funções auxiliares de criação de células, badges e ações. | Consulte `/src/assets/js/tarefas.js` e abra `tarefas.html` ou `index.html`; as linhas, badges, contador e modais são inseridos/atualizados pelo script. |
+| Tratamento de eventos | Formulário de tarefa, controles de busca/filtro/ordenação, botões da tabela, botão de abrir detalhes, modais, tecla `Escape` e evento `storage`. | Consulte os `addEventListener()` em `/src/assets/js/tarefas.js`. |
+| Funções | Funções de leitura e persistência, validação, renderização, filtro, status, detalhes e exclusão. | Consulte `getTasks()`, `saveTasks()`, `validateTask()`, `renderTaskTable()`, `toggleTaskStatus()`, `openTaskDetails()` e `confirmTaskDeletion()` em `/src/assets/js/tarefas.js`. |
 | Arrays | A lista de tarefas retornada por `getTasks()` e persistida em `studyflow-tasks`; também há tarefas iniciais em `createSeedTasks()`. | Consulte `/src/assets/js/tarefas.js` e o armazenamento local do navegador. |
 | Métodos de iteração | `some()` para duplicidade, `filter()` para busca/exclusão, `sort()` para ordenação, `forEach()` para renderização, `find()` para localizar tarefas, `map()` para atualizar status e `reduce()` para os indicadores do painel. | Consulte `validateTask()`, `filterAndSortTasks()`, `renderDashboard()`, `toggleTaskStatus()` e `confirmTaskDeletion()` em `/src/assets/js/tarefas.js`. |
 | Validação de formulários | `validateTask()` é chamada antes de salvar a tarefa. | Envie dados inválidos em `nova-tarefa.html` e consulte `cadastro-invalido.png`. |
-| Alteração dinâmica da interface | Tabela, contador, feedback, painel, checkboxes, badges, estado vazio e modal são atualizados sem recarga. | Use busca, mudança de status e exclusão em `tarefas.html`. |
-| Tratamento de situações inválidas | Campos incorretos, tarefa duplicada, busca sem resultado, identificador inexistente e armazenamento local inválido recebem tratamento seguro. | Consulte as condições de `validateTask()`, `toggleTaskStatus()`, `openDeleteModal()` e `getTasks()`. |
+| Alteração dinâmica da interface | Tabela, contador, feedback, painel, botão de abertura, badges, estado vazio e modais são atualizados sem recarga. | Use busca, mudança de status e exclusão em `tarefas.html`, e abra detalhes em `index.html`. |
+| Tratamento de situações inválidas | Campos incorretos, tarefa duplicada, busca sem resultado, identificador inexistente e armazenamento local inválido recebem tratamento seguro. | Consulte as condições de `validateTask()`, `toggleTaskStatus()`, `openTaskDetails()`, `openDeleteModal()` e `getTasks()`. |
 
 ## 5. Validações implementadas
 
@@ -128,7 +145,7 @@ Em cada erro, o campo relacionado recebe `aria-invalid="true"`, a classe `is-inv
 | Tentativa de criar uma tarefa duplicada | `some()` compara título, matéria e prazo antes da gravação. | A tarefa não é gravada e a mensagem de duplicidade é exibida. |
 | Prazo anterior ao dia atual ou data sem formato válido | `parseDate()` e a comparação com a data atual impedem a gravação. | A tarefa não é gravada e o prazo é marcado como inválido. |
 | Busca ou filtros sem correspondência | A tabela fica sem linhas e o estado vazio é exibido. | A interface informa que nenhuma tarefa foi encontrada, sem quebrar o layout. |
-| Ação sobre tarefa inexistente | `find()` confirma a existência do identificador antes de atualizar ou remover. | Uma mensagem de erro é mostrada e a lista existente é preservada. |
+| Ação sobre tarefa inexistente | `find()` confirma a existência do identificador antes de atualizar, abrir detalhes ou remover. | Uma mensagem de erro é mostrada e a lista existente é preservada. |
 | Exclusão cancelada | `closeDeleteModal()` limpa o identificador temporário sem alterar o array. | O modal fecha e a tarefa permanece disponível. |
 | `localStorage` corrompido ou em formato inadequado | `getTasks()` usa `try/catch`, filtra itens inválidos e restaura as tarefas iniciais quando necessário. | A aplicação continua utilizável, sem erro de JavaScript no fluxo normal. |
 
@@ -199,7 +216,16 @@ Para repetir os testes em um estado limpo, abra as ferramentas de desenvolvedor 
 4. Recarregue a página e confirme que o status foi preservado.
 5. Clique em **Reabrir** e confirme o retorno ao estado pendente.
 
-### Teste 5 — Exclusão com confirmação
+### Teste 5 — Abrir detalhes sem concluir
+
+1. Acesse `index.html`.
+2. Na área **Próximas tarefas**, clique no botão ↗ de uma tarefa.
+3. Confira título, matéria, prazo, prioridade e status no diálogo **Detalhes da tarefa**.
+4. Clique em **Fechar** e confirme que a tarefa continua com o mesmo status.
+5. Abra novamente e pressione `Escape` para conferir o segundo modo de fechamento.
+6. Use **Gerenciar tarefas** quando quiser concluir, reabrir ou excluir a tarefa.
+
+### Teste 6 — Exclusão com confirmação
 
 1. Em `tarefas.html`, clique em **Excluir**.
 2. No modal, clique em **Cancelar** e confirme que a tarefa permanece.
@@ -208,10 +234,10 @@ Para repetir os testes em um estado limpo, abra as ferramentas de desenvolvedor 
 5. Confirme a mensagem de sucesso, a remoção da linha e a atualização do contador.
 6. Repita em 390 x 844 px para verificar que o modal continua acessível no smartphone.
 
-### Teste 6 — Responsividade e console
+### Teste 7 — Responsividade e console
 
 1. Teste as páginas em 1440 x 900 px, 768 x 1024 px e 390 x 844 px.
-2. Em cada viewport, abra a busca/filtros, execute uma ação de tarefa e abra o modal de exclusão.
+2. Em cada viewport, abra a busca/filtros, execute uma ação de tarefa e abra os modais de detalhes e exclusão.
 3. Confirme que não existe rolagem horizontal desnecessária, que os controles permanecem acessíveis e que o modal cabe na tela.
 4. Abra o console do navegador, recarregue as páginas e repita o fluxo normal.
 5. Confirme que nenhum erro JavaScript é registrado.
@@ -235,7 +261,7 @@ Serão registradas exatamente 10 capturas:
 | `tarefas-sem-resultado.png` | `tarefas.html` | Pesquisar um termo inexistente. | Estado vazio e tratamento de ausência de resultados. |
 | `tarefas-ordenadas.png` | `tarefas.html` | Escolher um critério de ordenação. | Ordem visual modificada por `sort()`. |
 | `tarefa-concluida.png` | `tarefas.html` | Concluir uma tarefa pendente. | Alteração de status, mensagem e atualização do DOM. |
-| `painel-atualizado.png` | `index.html` | Voltar ao painel após concluir/reabrir uma tarefa. | Indicadores, próximas tarefas e matérias ativas atualizados. |
+| `painel-atualizado.png` | `index.html` | No painel, clicar no botão ↗ de uma próxima tarefa. | Modal de detalhes, dados preenchidos dinamicamente e status preservado. |
 | `exclusao-confirmacao.png` | `tarefas.html` | Em 390 × 844 px, clicar em Excluir sem confirmar ainda. | Modal de confirmação responsivo e estado temporário da interface. |
 | `exclusao-concluida.png` | `tarefas.html` | Em 390 × 844 px, confirmar a exclusão de uma tarefa de demonstração. | Remoção persistente da linha e atualização do contador sem overflow horizontal. |
 
@@ -243,14 +269,14 @@ Serão registradas exatamente 10 capturas:
 
 | Requisito | Funcionalidade relacionada | Arquivo(s) | Evidência |
 | --- | --- | --- | --- |
-| Manipulação do DOM | Renderização de tarefas, painel e modal | `/src/assets/js/tarefas.js` | Funções `renderTaskTable()`, `renderDashboard()` e `ensureDeleteModal()`; capturas `tarefas-lista-inicial.png` e `exclusao-confirmacao.png`. |
-| Tratamento de eventos | Cadastro, filtros, status e exclusão | `/src/assets/js/tarefas.js` | Listeners de `submit`, `input`, `change`, `click`, `keydown` e `storage`; capturas `cadastro-sucesso.png` e `tarefa-concluida.png`. |
+| Manipulação do DOM | Renderização de tarefas, painel e modais | `/src/assets/js/tarefas.js` | Funções `renderTaskTable()`, `renderDashboard()`, `ensureTaskDetailsModal()` e `ensureDeleteModal()`; capturas `tarefas-lista-inicial.png`, `painel-atualizado.png` e `exclusao-confirmacao.png`. |
+| Tratamento de eventos | Cadastro, filtros, status, detalhes e exclusão | `/src/assets/js/tarefas.js` | Listeners de `submit`, `input`, `change`, `click`, `keydown` e `storage`; capturas `cadastro-sucesso.png`, `tarefa-concluida.png` e `painel-atualizado.png`. |
 | Validação de formulários | Cadastro de tarefa | `/src/assets/js/tarefas.js`, `/src/nova-tarefa.html` | Função `validateTask()` e captura `cadastro-invalido.png`. |
-| Alteração dinâmica da interface | Busca, status, painel e modal | `/src/assets/js/tarefas.js`, `/src/index.html`, `/src/tarefas.html` | Capturas `tarefas-busca-filtrada.png`, `tarefa-concluida.png`, `painel-atualizado.png` e `exclusao-confirmacao.png`. |
-| Uso de funções | Organização das regras de tarefas | `/src/assets/js/tarefas.js` | Funções `getTasks()`, `saveTasks()`, `validateTask()`, `filterAndSortTasks()`, `toggleTaskStatus()` e `confirmTaskDeletion()`. |
+| Alteração dinâmica da interface | Busca, status, painel e modais | `/src/assets/js/tarefas.js`, `/src/index.html`, `/src/tarefas.html` | Capturas `tarefas-busca-filtrada.png`, `tarefa-concluida.png`, `painel-atualizado.png` e `exclusao-confirmacao.png`. |
+| Uso de funções | Organização das regras de tarefas | `/src/assets/js/tarefas.js` | Funções `getTasks()`, `saveTasks()`, `validateTask()`, `filterAndSortTasks()`, `toggleTaskStatus()`, `openTaskDetails()` e `confirmTaskDeletion()`. |
 | Uso de arrays | Estado persistente das tarefas | `/src/assets/js/tarefas.js` | Array de `createSeedTasks()` e lista retornada por `getTasks()`; captura `tarefas-lista-inicial.png`. |
 | Métodos de iteração | Duplicidade, consulta, ordem, atualização, resumo e exclusão | `/src/assets/js/tarefas.js` | `some()`, `filter()`, `sort()`, `forEach()`, `find()`, `map()` e `reduce()` nas funções de validação, filtro, painel, status e exclusão; capturas de busca e ordenação. |
-| Tratamento de situações inválidas | Formulário, busca, identificadores e armazenamento | `/src/assets/js/tarefas.js` | `validateTask()`, `getTasks()`, `toggleTaskStatus()` e `openDeleteModal()`; capturas `cadastro-invalido.png` e `tarefas-sem-resultado.png`. |
+| Tratamento de situações inválidas | Formulário, busca, identificadores e armazenamento | `/src/assets/js/tarefas.js` | `validateTask()`, `getTasks()`, `toggleTaskStatus()`, `openTaskDetails()` e `openDeleteModal()`; capturas `cadastro-invalido.png` e `tarefas-sem-resultado.png`. |
 
 ## 11. Checklist final da Etapa 04
 

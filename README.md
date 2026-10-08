@@ -20,7 +20,8 @@ O projeto continua sendo uma aplicação estática em HTML, CSS e JavaScript pur
 - Pesquisa por título, matéria ou descrição na página de tarefas.
 - Filtros dinâmicos por matéria, status e prioridade.
 - Ordenação por prazo, prioridade ou título.
-- Conclusão e reabertura de tarefas com atualização imediata da tabela e do painel.
+- Conclusão e reabertura de tarefas na página **Tarefas**, com atualização imediata da tabela e do painel.
+- Abertura dos detalhes de uma próxima tarefa diretamente pelo painel, sem alterar seu status.
 - Exclusão de tarefas mediante confirmação em modal acessível.
 - Cadastro e remoção de matérias, com reutilização delas no formulário de tarefas.
 - Tema claro/escuro persistente e menu lateral responsivo/recolhível.
@@ -36,7 +37,7 @@ O projeto continua sendo uma aplicação estática em HTML, CSS e JavaScript pur
 
 | Página | Finalidade |
 | --- | --- |
-| `src/index.html` | Painel com resumo e próximas tarefas. |
+| `src/index.html` | Painel com resumo, próximas tarefas e abertura de detalhes. |
 | `src/tarefas.html` | Busca, filtros, ordenação, conclusão/reabertura e exclusão de tarefas. |
 | `src/nova-tarefa.html` | Cadastro de uma tarefa com validação JavaScript. |
 | `src/materias.html` | Cadastro e gerenciamento das matérias do semestre. |
@@ -62,10 +63,11 @@ Também é possível acessar a versão publicada no GitHub Pages:
 2. Cadastre uma tarefa válida. Ela será salva no navegador e poderá ser vista em **Tarefas**.
 3. Em **Tarefas**, digite uma palavra no campo de pesquisa, combine os filtros e altere a ordenação. A tabela e o contador devem mudar sem recarregar a página.
 4. Pesquise um termo inexistente para conferir o estado “Nenhuma tarefa encontrada”.
-5. Clique em **Concluir** ou **Reabrir** para atualizar o status. Confira o reflexo no painel inicial.
-6. Clique em **Excluir**, confirme ou cancele no modal e observe o resultado na lista.
-7. Em **Matérias**, adicione uma disciplina; ela ficará disponível ao criar uma nova tarefa.
-8. Use o botão de tema e o menu lateral em desktop, tablet ou smartphone para verificar que a responsividade foi preservada.
+5. Em **Tarefas**, clique em **Concluir** ou **Reabrir** para atualizar o status. Confira o reflexo no painel inicial.
+6. No painel inicial, clique no botão ↗ de uma próxima tarefa; confira os detalhes e que o status não foi alterado.
+7. Clique em **Excluir**, confirme ou cancele no modal e observe o resultado na lista.
+8. Em **Matérias**, adicione uma disciplina; ela ficará disponível ao criar uma nova tarefa.
+9. Use o botão de tema e o menu lateral em desktop, tablet ou smartphone para verificar que a responsividade foi preservada.
 
 O detalhamento dos requisitos, cenários inválidos e matriz de evidências está em [docs/etapa-04.md](docs/etapa-04.md).
 

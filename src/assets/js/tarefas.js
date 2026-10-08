@@ -8,6 +8,8 @@
   let pendingDeletionId = null;
   let deleteModal;
   let lastDeleteTrigger = null;
+  let detailsModal;
+  let lastDetailsTrigger = null;
   let memoryTasks = null;
 
   const hasOwn = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
@@ -176,7 +178,7 @@
     if (!feedback) return;
     const link = document.createElement("a");
     link.className = "inline-link";
-    link.href = "tarefas.html?v=stage4-1";
+    link.href = "tarefas.html?v=stage4-2";
     link.textContent = "Ver minhas tarefas";
     feedback.className = "form-feedback is-success";
     feedback.replaceChildren(document.createTextNode(`${message} `), link);
@@ -287,21 +289,22 @@
 
   const createDashboardTask = (task) => {
     const item = document.createElement("li");
-    const checkbox = document.createElement("input");
+    const openButton = document.createElement("button");
     const copy = document.createElement("div");
     const link = document.createElement("a");
     const detail = document.createElement("p");
-    checkbox.className = "task-check";
-    checkbox.type = "checkbox";
-    checkbox.checked = task.status === "concluida";
-    checkbox.dataset.dashboardStatus = task.id;
-    checkbox.setAttribute("aria-label", `${task.status === "concluida" ? "Reabrir" : "Concluir"} ${task.title}`);
+    openButton.className = "task-open";
+    openButton.type = "button";
+    openButton.dataset.dashboardView = task.id;
+    openButton.setAttribute("aria-label", `Abrir detalhes de ${task.title}`);
+    openButton.title = "Abrir detalhes da tarefa";
+    openButton.textContent = "↗";
     copy.className = "task-copy";
     link.href = "tarefas.html";
     link.textContent = task.title;
     detail.textContent = `${task.subject} · Entrega em ${formatDate(task.dueDate)}`;
     copy.append(link, detail);
-    item.append(checkbox, copy, createBadge(task.status, statusLabels[task.status]));
+    item.append(openButton, copy, createBadge(task.status, statusLabels[task.status]));
     return item;
   };
 
@@ -363,6 +366,98 @@
     }
     refreshTaskInterfaces();
     showListFeedback(nextStatus === "concluida" ? "Tarefa marcada como concluída." : "Tarefa reaberta para acompanhamento.", "is-success");
+  };
+
+  const createTaskDetailItem = (label, dataAttribute) => {
+    const item = document.createElement("div");
+    const term = document.createElement("dt");
+    const description = document.createElement("dd");
+    term.textContent = label;
+    description.dataset[dataAttribute] = "";
+    item.append(term, description);
+    return item;
+  };
+
+  const ensureTaskDetailsModal = () => {
+    if (detailsModal) return detailsModal;
+    const overlay = document.createElement("div");
+    const dialog = document.createElement("section");
+    const title = document.createElement("h2");
+    const taskName = document.createElement("h3");
+    const taskDescription = document.createElement("p");
+    const details = document.createElement("dl");
+    const actions = document.createElement("div");
+    const listLink = document.createElement("a");
+    const closeButton = document.createElement("button");
+
+    overlay.className = "task-modal task-details-modal";
+    overlay.hidden = true;
+    overlay.setAttribute("role", "presentation");
+    dialog.className = "task-modal__dialog";
+    dialog.setAttribute("role", "dialog");
+    dialog.setAttribute("aria-modal", "true");
+    dialog.setAttribute("aria-labelledby", "task-details-modal-title");
+    dialog.setAttribute("aria-describedby", "task-details-modal-description");
+    title.id = "task-details-modal-title";
+    title.textContent = "Detalhes da tarefa";
+    taskName.className = "task-details__name";
+    taskName.dataset.taskDetailsName = "";
+    taskDescription.id = "task-details-modal-description";
+    taskDescription.className = "task-details__description";
+    taskDescription.dataset.taskDetailsDescription = "";
+    details.className = "task-details";
+    details.append(
+      createTaskDetailItem("Matéria", "taskDetailsSubject"),
+      createTaskDetailItem("Prazo", "taskDetailsDueDate"),
+      createTaskDetailItem("Prioridade", "taskDetailsPriority"),
+      createTaskDetailItem("Status", "taskDetailsStatus")
+    );
+    actions.className = "task-modal__actions";
+    listLink.className = "button secondary";
+    listLink.href = "tarefas.html";
+    listLink.textContent = "Gerenciar tarefas";
+    closeButton.type = "button";
+    closeButton.className = "button";
+    closeButton.dataset.taskDetailsClose = "";
+    closeButton.textContent = "Fechar";
+    actions.append(listLink, closeButton);
+    dialog.append(title, taskName, taskDescription, details, actions);
+    overlay.append(dialog);
+    document.body.append(overlay);
+
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay || event.target.closest("[data-task-details-close]")) closeTaskDetailsModal();
+    });
+    detailsModal = overlay;
+    return overlay;
+  };
+
+  const openTaskDetails = (id, trigger) => {
+    const task = getTasks().find((storedTask) => storedTask.id === id);
+    if (!task) {
+      showListFeedback("Essa tarefa não foi encontrada. Atualize a página e tente novamente.", "is-error");
+      return;
+    }
+    const modal = ensureTaskDetailsModal();
+    lastDetailsTrigger = trigger || null;
+    modal.querySelector("[data-task-details-name]").textContent = task.title;
+    modal.querySelector("[data-task-details-description]").textContent = task.description || "Sem descrição adicionada para esta tarefa.";
+    modal.querySelector("[data-task-details-subject]").textContent = task.subject;
+    modal.querySelector("[data-task-details-due-date]").textContent = formatDate(task.dueDate);
+    modal.querySelector("[data-task-details-priority]").replaceChildren(createBadge(task.priority, priorityLabels[task.priority]));
+    modal.querySelector("[data-task-details-status]").replaceChildren(createBadge(task.status, statusLabels[task.status]));
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+    modal.querySelector("[data-task-details-close]").focus();
+  };
+
+  const closeTaskDetailsModal = (restoreFocus = true) => {
+    if (!detailsModal) return;
+    const trigger = lastDetailsTrigger;
+    detailsModal.hidden = true;
+    lastDetailsTrigger = null;
+    document.body.classList.remove("modal-open");
+    if (restoreFocus && trigger?.isConnected) trigger.focus();
   };
 
   const ensureDeleteModal = () => {
@@ -500,14 +595,16 @@
   const initializeDashboard = () => {
     const taskList = document.querySelector("[data-dashboard-tasks]");
     if (!taskList) return;
-    taskList.addEventListener("change", (event) => {
-      const checkbox = event.target.closest("[data-dashboard-status]");
-      if (checkbox) toggleTaskStatus(checkbox.dataset.dashboardStatus);
+    taskList.addEventListener("click", (event) => {
+      const openButton = event.target.closest("[data-dashboard-view]");
+      if (openButton) openTaskDetails(openButton.dataset.dashboardView, openButton);
     });
   };
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && deleteModal && !deleteModal.hidden) closeDeleteModal();
+    if (event.key !== "Escape") return;
+    if (detailsModal && !detailsModal.hidden) closeTaskDetailsModal();
+    else if (deleteModal && !deleteModal.hidden) closeDeleteModal();
   });
 
   window.addEventListener("storage", (event) => {
