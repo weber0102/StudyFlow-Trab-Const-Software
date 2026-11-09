@@ -24,6 +24,10 @@ Todas as páginas usam a mesma base: `header` para marca e navegação, `nav` pa
 
 Na tela de cadastro, o elemento `form` reúne todos os campos. Cada controle possui `label` vinculado pelo atributo `for`, com identificadores únicos nos campos correspondentes. Isso melhora a semântica e a acessibilidade da interface.
 
-## Evolução planejada
+## Evolução implementada — Etapa 05
 
-Em etapas futuras, a estrutura estática poderá receber JavaScript para atualização da interface, uma API para operações de matérias e tarefas e persistência de dados. A separação entre páginas, estilos e documentação já permite essa evolução incremental.
+A estrutura foi evoluída para módulos nativos do JavaScript, carregados por `main.js` com `type="module"`. O domínio de tarefas foi separado entre armazenamento, validação, renderização, modais e controlador; tema, menu, autenticação e matérias também passaram a expor inicializadores próprios.
+
+O painel inicial agora consulta um JSON acadêmico por `fetch()` e envia check-ins por `POST` a um serviço REST simulado. A camada `api-client.js` concentra a comunicação HTTP, incluindo `response.ok`, JSON e erros de rede, enquanto `study-service.js` concentra os endpoints. Essa organização preserva o protótipo de tarefas local e permite a evolução incremental para uma API real nas próximas etapas.
+
+Para a documentação detalhada da modularização, consulte [etapa-05.md](etapa-05.md).

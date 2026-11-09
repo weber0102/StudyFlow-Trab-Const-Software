@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Painel interativo de estudos do StudyFlow.">
     <title>StudyFlow | Início</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=tasks-1">
-    <link rel="stylesheet" href="assets/css/components.css?v=task-details-1">
-    <link rel="stylesheet" href="assets/css/responsive.css?v=task-details-1">
-    <script src="assets/js/theme.js?v=brand-1" defer></script>
-    <script src="assets/js/subjects.js?v=subjects-2" defer></script>
-    <script src="assets/js/navigation.js?v=menu-1" defer></script>
-    <script src="assets/js/auth.js?v=auth-1" defer></script>
-    <script src="assets/js/tarefas.js?v=stage4-2" defer></script>
+    <link rel="icon" type="image/png" href="assets/img/studyflow-mark-light.png">
+    <link rel="stylesheet" href="assets/css/style.css?v=stage5-1">
+    <link rel="stylesheet" href="assets/css/components.css?v=stage5-1">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=stage5-1">
+    <script type="module" src="assets/js/main.js?v=stage5-1"></script>
   </head>
   <body>
     <header class="site-header">
@@ -30,7 +27,7 @@
         <a class="button" href="nova-tarefa.html">+ Adicionar tarefa</a>
       </section>
 
-      <aside class="notice" aria-label="Informação sobre a persistência"><strong>Interatividade ativa:</strong> cadastre e atualize tarefas; os dados ficam armazenados apenas neste navegador para demonstração.</aside>
+      <aside class="notice" aria-label="Informação sobre a persistência"><strong>Interatividade ativa:</strong> tarefas e matérias ficam neste navegador; o check-in de estudo usa um serviço REST simulado para demonstração da Etapa 05.</aside>
 
       <section class="stats-grid" aria-label="Resumo das tarefas" aria-live="polite">
         <article class="card stat-card"><p class="stat-label">Tarefas pendentes</p><p class="stat-value" data-dashboard-pending>0</p><p class="stat-detail" data-dashboard-pending-detail>Atividades para acompanhar</p></article>
@@ -46,8 +43,29 @@
         </article>
         <aside class="panel" aria-labelledby="subjects-title"><header class="panel-heading"><h2 id="subjects-title">Matérias ativas</h2></header><ul class="plain-list" data-dashboard-subjects></ul></aside>
       </section>
+
+      <section class="study-sync-layout" data-study-panel aria-label="Recomendações e check-in de estudo">
+        <article class="panel recommendations-panel" aria-labelledby="recommendations-title">
+          <header class="panel-heading"><div><p class="eyebrow">Dados acadêmicos</p><h2 id="recommendations-title">Recomendações para estudar</h2><p>Conteúdo carregado assincronamente de uma fonte JSON do StudyFlow.</p></div><button class="button secondary" type="button" data-recommendations-retry>Atualizar</button></header>
+          <div class="async-state" data-recommendations-state hidden role="status" aria-live="polite"></div>
+          <ul class="recommendation-grid" data-recommendations-list hidden></ul>
+          <p class="form-feedback async-feedback" data-recommendations-feedback aria-live="polite"></p>
+        </article>
+
+        <aside class="card checkin-card" aria-labelledby="checkin-title">
+          <p class="eyebrow">Check-in assíncrono</p><h2 id="checkin-title">Registrar estudo</h2><p class="field-help">Envie um resumo rápido para o serviço REST simulado e acompanhe os últimos registros.</p>
+          <form data-checkin-form novalidate>
+            <div class="field"><label for="checkin-subject">Matéria</label><select id="checkin-subject" name="subject" data-checkin-subject required><option value="" selected disabled data-placeholder>Selecione uma matéria</option></select></div>
+            <div class="field"><label for="checkin-minutes">Tempo estudado (minutos)</label><input id="checkin-minutes" name="minutes" type="number" min="1" max="600" inputmode="numeric" placeholder="Ex.: 45" required></div>
+            <div class="field"><label for="checkin-note">Observação</label><textarea id="checkin-note" name="note" maxlength="180" placeholder="Ex.: revisei os principais conceitos."></textarea></div>
+            <button type="submit" data-checkin-submit>Enviar check-in</button>
+            <p class="form-feedback" data-checkin-feedback aria-live="polite"></p>
+          </form>
+          <div class="checkin-history-wrap"><h3>Últimos check-ins</h3><ul class="checkin-history" data-checkin-history aria-live="polite"></ul></div>
+        </aside>
+      </section>
     </main>
 
-    <footer class="site-footer"><div class="footer-content"><p>StudyFlow · Etapa 04</p><p>Organize seus estudos com clareza.</p></div></footer>
+    <footer class="site-footer"><div class="footer-content"><p>StudyFlow · Etapa 05</p><p>Organize seus estudos com clareza.</p></div></footer>
   </body>
 </html>

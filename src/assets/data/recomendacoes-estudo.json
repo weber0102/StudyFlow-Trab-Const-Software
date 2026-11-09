@@ -1,0 +1,25 @@
+{
+  "recommendations": [
+    {
+      "id": "rec-architecture",
+      "subject": "Construção de Software",
+      "title": "Revise a separação de responsabilidades",
+      "description": "Reserve um bloco curto para identificar o que pertence à interface, aos dados e aos serviços do seu projeto.",
+      "duration": "25 min de foco"
+    },
+    {
+      "id": "rec-database",
+      "subject": "Banco de Dados",
+      "title": "Pratique um modelo de dados por vez",
+      "description": "Escolha uma entidade do sistema, liste seus atributos e valide os relacionamentos antes de seguir para a próxima.",
+      "duration": "30 min de prática"
+    },
+    {
+      "id": "rec-calculus",
+      "subject": "Cálculo I",
+      "title": "Resolva exercícios em ciclos curtos",
+      "description": "Alterne resolução, conferência e uma anotação breve sobre o ponto em que houve mais dificuldade.",
+      "duration": "20 min de revisão"
+    }
+  ]
+}
