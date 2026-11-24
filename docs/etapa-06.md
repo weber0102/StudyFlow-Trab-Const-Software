@@ -417,8 +417,10 @@ git diff --check
 git add backend src docs README.md tests/README.md
 git commit -m "Etapa 06 - API REST da aplicação"
 git push origin main
+git tag etapa-06
+git push origin etapa-06
 ```
 
-O documento oficial da Etapa 06 não determina uma tag específica; por isso não há tag adicional para esta entrega. Commit e push registram os arquivos completos na branch `main`; o workflow do GitHub Pages publica a interface estática. A execução da API segue as instruções da seção 2.
+A entrega deve ser identificada pela tag `etapa-06`, conforme a orientação de entrega recebida. Crie a tag após o commit final e envie-a ao GitHub para que a versão possa ser consultada diretamente. Commit e push registram os arquivos completos na branch `main`; o workflow do GitHub Pages publica a interface estática. A execução da API segue as instruções da seção 2.
 
 Referências técnicas: [instalação do Express](https://expressjs.com/en/starter/installing/) e [tratamento de erros do Express](https://expressjs.com/en/guide/error-handling/).
