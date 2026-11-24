@@ -6,10 +6,10 @@
     <meta name="description" content="Painel interativo de estudos do StudyFlow.">
     <title>StudyFlow | Início</title>
     <link rel="icon" type="image/png" href="assets/img/studyflow-mark-light.png">
-    <link rel="stylesheet" href="assets/css/style.css?v=stage5-1">
-    <link rel="stylesheet" href="assets/css/components.css?v=stage5-1">
-    <link rel="stylesheet" href="assets/css/responsive.css?v=stage5-1">
-    <script type="module" src="assets/js/main.js?v=stage5-1"></script>
+    <link rel="stylesheet" href="assets/css/style.css?v=stage6-1">
+    <link rel="stylesheet" href="assets/css/components.css?v=stage6-1">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=stage6-1">
+    <script type="module" src="assets/js/main.js?v=stage6-1"></script>
   </head>
   <body>
     <header class="site-header">
@@ -27,7 +27,7 @@
         <a class="button" href="nova-tarefa.html">+ Adicionar tarefa</a>
       </section>
 
-      <aside class="notice" aria-label="Informação sobre a persistência"><strong>Interatividade ativa:</strong> tarefas e matérias ficam neste navegador; o check-in de estudo usa um serviço REST simulado para demonstração da Etapa 05.</aside>
+      <aside class="notice" aria-label="Informação sobre a persistência" data-mode-copy="summary"></aside>
 
       <section class="stats-grid" aria-label="Resumo das tarefas" aria-live="polite">
         <article class="card stat-card"><p class="stat-label">Tarefas pendentes</p><p class="stat-value" data-dashboard-pending>0</p><p class="stat-detail" data-dashboard-pending-detail>Atividades para acompanhar</p></article>
@@ -46,14 +46,14 @@
 
       <section class="study-sync-layout" data-study-panel aria-label="Recomendações e check-in de estudo">
         <article class="panel recommendations-panel" aria-labelledby="recommendations-title">
-          <header class="panel-heading"><div><p class="eyebrow">Dados acadêmicos</p><h2 id="recommendations-title">Recomendações para estudar</h2><p>Conteúdo carregado assincronamente de uma fonte JSON do StudyFlow.</p></div><button class="button secondary" type="button" data-recommendations-retry>Atualizar</button></header>
+          <header class="panel-heading"><div><p class="eyebrow">Dados acadêmicos</p><h2 id="recommendations-title">Recomendações para estudar</h2><p>Sugestões para organizar seus próximos blocos de estudo.</p></div><button class="button secondary" type="button" data-recommendations-retry>Atualizar</button></header>
           <div class="async-state" data-recommendations-state hidden role="status" aria-live="polite"></div>
           <ul class="recommendation-grid" data-recommendations-list hidden></ul>
           <p class="form-feedback async-feedback" data-recommendations-feedback aria-live="polite"></p>
         </article>
 
         <aside class="card checkin-card" aria-labelledby="checkin-title">
-          <p class="eyebrow">Check-in assíncrono</p><h2 id="checkin-title">Registrar estudo</h2><p class="field-help">Envie um resumo rápido para o serviço REST simulado e acompanhe os últimos registros.</p>
+          <p class="eyebrow">Check-in assíncrono</p><h2 id="checkin-title">Registrar estudo</h2><p class="field-help" data-mode-copy="checkin"></p>
           <form data-checkin-form novalidate>
             <div class="field"><label for="checkin-subject">Matéria</label><select id="checkin-subject" name="subject" data-checkin-subject required><option value="" selected disabled data-placeholder>Selecione uma matéria</option></select></div>
             <div class="field"><label for="checkin-minutes">Tempo estudado (minutos)</label><input id="checkin-minutes" name="minutes" type="number" min="1" max="600" inputmode="numeric" placeholder="Ex.: 45" required></div>
@@ -66,6 +66,6 @@
       </section>
     </main>
 
-    <footer class="site-footer"><div class="footer-content"><p>StudyFlow · Etapa 05</p><p>Organize seus estudos com clareza.</p></div></footer>
+    <footer class="site-footer"><div class="footer-content"><p>StudyFlow · Etapa 06</p><p>Organize seus estudos com clareza.</p></div></footer>
   </body>
 </html>

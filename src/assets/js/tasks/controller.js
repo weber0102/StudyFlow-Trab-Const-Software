@@ -1,10 +1,14 @@
-import { clearInvalidFields, setFeedback, setFormFieldInvalid } from "../core/feedback.js";
-import { createId } from "../core/helpers.js";
+import { clearInvalidFields, setButtonLoading, setFeedback, setFormFieldInvalid } from "../core/feedback.js";
 import { getSubjects } from "../subjects.js";
+import { isApiMode } from "../services/config.js";
+import { createTask, deleteTask, fetchTask, fetchTasks, updateTask } from "../services/task-service.js";
 import { closeDeleteModal, initTaskModals, openDeleteModal, openTaskDetails } from "./modals.js";
-import { getTasks, saveTasks, TASK_STORAGE_KEY } from "./store.js";
+import { getTasks, TASK_STORAGE_KEY } from "./store.js";
 import { getTaskFormData, validateTask } from "./validation.js";
 import { renderDashboard, renderTaskTable, setTaskFormSuccess } from "./view.js";
+
+let mutationPending = false;
+let loadPending = false;
 
 const showListFeedback = (message, type = "") => {
   setFeedback("[data-task-list-feedback]", message, type);
@@ -12,77 +16,93 @@ const showListFeedback = (message, type = "") => {
 };
 
 export const refreshTaskInterfaces = () => {
-  const tasks = getTasks();
-  renderTaskTable(tasks);
-  renderDashboard(tasks, getSubjects());
+  renderTaskTable(getTasks());
+  renderDashboard(getTasks(), getSubjects());
 };
 
-const toggleTaskStatus = (id) => {
-  const task = getTasks().find((storedTask) => storedTask.id === id);
-  if (!task) {
-    showListFeedback("Essa tarefa não foi encontrada. Atualize a página e tente novamente.", "is-error");
-    return;
+const loadTasks = async () => {
+  if (loadPending) return;
+  loadPending = true;
+  const retry = document.querySelector("[data-tasks-retry]");
+  const submit = document.querySelector("[data-task-form] button[type='submit']");
+  setButtonLoading(retry, true, "Carregando…");
+  if (submit) submit.disabled = true;
+  const state = document.querySelector("[data-tasks-state]");
+  state.textContent = "Carregando suas tarefas…";
+  state.className = "async-state is-loading";
+  state.setAttribute("aria-busy", "true");
+  document.querySelector("[data-task-empty]")?.setAttribute("hidden", "");
+  try {
+    await fetchTasks();
+    refreshTaskInterfaces();
+    state.textContent = isApiMode ? "Tarefas carregadas do servidor." : "Tarefas carregadas deste navegador.";
+    state.className = "async-state is-success";
+    if (submit) submit.disabled = false;
+  } catch (error) {
+    state.textContent = `Não foi possível carregar as tarefas. ${error.message} Use Atualizar tarefas para tentar novamente.`;
+    state.className = "async-state is-error";
+    document.querySelectorAll("[data-dashboard-pending], [data-dashboard-completed], [data-dashboard-next]").forEach((element) => { element.textContent = "—"; });
+  } finally {
+    loadPending = false;
+    state.setAttribute("aria-busy", "false");
+    setButtonLoading(retry, false);
   }
-
-  const nextStatus = task.status === "concluida" ? "pendente" : "concluida";
-  const updatedTasks = getTasks().map((storedTask) => (
-    storedTask.id === id ? { ...storedTask, status: nextStatus } : storedTask
-  ));
-  if (!saveTasks(updatedTasks)) {
-    showListFeedback("Não foi possível salvar a alteração neste navegador.", "is-error");
-    return;
-  }
-
-  refreshTaskInterfaces();
-  showListFeedback(nextStatus === "concluida" ? "Tarefa marcada como concluída." : "Tarefa reaberta para acompanhamento.", "is-success");
 };
 
-const confirmTaskDeletion = (id) => {
-  const task = getTasks().find((storedTask) => storedTask.id === id);
-  if (!task) {
-    closeDeleteModal();
-    showListFeedback("A tarefa escolhida não pôde ser localizada.", "is-error");
-    return;
+const runMutation = async (button, label, operation) => {
+  if (mutationPending || loadPending) return;
+  mutationPending = true;
+  setButtonLoading(button, true, label);
+  try {
+    await operation();
+  } catch (error) {
+    showListFeedback(error.message, "is-error");
+    setFeedback(".task-modal:not([hidden]) [data-task-modal-feedback]", error.message, "is-error");
+  } finally {
+    mutationPending = false;
+    setButtonLoading(button, false);
   }
-  if (!saveTasks(getTasks().filter((storedTask) => storedTask.id !== id))) {
-    closeDeleteModal();
-    showListFeedback("Não foi possível excluir a tarefa neste navegador.", "is-error");
-    return;
-  }
+};
 
+const confirmTaskDeletion = (task) => runMutation(document.querySelector("[data-task-modal-confirm]"), "Excluindo…", async () => {
+  await deleteTask(task.id);
   closeDeleteModal(false);
-  refreshTaskInterfaces();
+  await loadTasks();
   showListFeedback(`“${task.title}” foi excluída.`, "is-success");
-};
+});
 
 const initializeTaskForm = () => {
   const form = document.querySelector("[data-task-form]");
   if (!form) return;
-
   form.addEventListener("input", () => {
     clearInvalidFields(form);
     setFeedback("[data-task-feedback]");
   });
-
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (mutationPending || form.querySelector("button[type='submit']").disabled) return;
     clearInvalidFields(form);
-    const task = getTaskFormData(form);
-    const validationError = validateTask(task);
-    if (validationError) {
-      setFormFieldInvalid(form, validationError.field, validationError.message, "[data-task-feedback]");
+    const fields = getTaskFormData(form);
+    const error = validateTask(fields);
+    if (error) {
+      setFormFieldInvalid(form, error.field, error.message, "[data-task-feedback]");
       return;
     }
-
-    const newTask = { id: createId("task"), ...task, createdAt: new Date().toISOString() };
-    if (!saveTasks([...getTasks(), newTask])) {
-      setFeedback("[data-task-feedback]", "Não foi possível salvar a tarefa neste navegador.", "is-error");
-      return;
+    mutationPending = true;
+    const button = form.querySelector("button[type='submit']");
+    setButtonLoading(button, true, "Salvando…");
+    setFeedback("[data-task-feedback]", "Salvando sua tarefa…");
+    try {
+      await createTask(fields);
+      form.reset();
+      await loadTasks();
+      setTaskFormSuccess("Tarefa cadastrada com sucesso.");
+    } catch (error) {
+      setFormFieldInvalid(form, error.field, error.message, "[data-task-feedback]");
+    } finally {
+      mutationPending = false;
+      setButtonLoading(button, false);
     }
-
-    form.reset();
-    refreshTaskInterfaces();
-    setTaskFormSuccess("Tarefa cadastrada com sucesso.");
   });
 };
 
@@ -90,56 +110,63 @@ const initializeTaskList = () => {
   const filterForm = document.querySelector("[data-task-filters]");
   const tableBody = document.querySelector("[data-task-table-body]");
   if (!filterForm || !tableBody) return;
-
-  filterForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    renderTaskTable(getTasks());
-  });
+  filterForm.addEventListener("submit", (event) => { event.preventDefault(); renderTaskTable(getTasks()); });
   filterForm.addEventListener("input", () => renderTaskTable(getTasks()));
-  filterForm.addEventListener("change", () => renderTaskTable(getTasks()));
+  filterForm.addEventListener("change", (event) => {
+    // O input de pesquisa já renderiza ao digitar; recriar a linha no blur perderia o primeiro clique.
+    if (event.target.matches("select")) renderTaskTable(getTasks());
+  });
   filterForm.addEventListener("reset", () => window.setTimeout(() => renderTaskTable(getTasks()), 0));
   tableBody.addEventListener("click", (event) => {
     const statusButton = event.target.closest("[data-task-status]");
     const deleteButton = event.target.closest("[data-task-delete]");
     if (statusButton) {
-      toggleTaskStatus(statusButton.dataset.taskStatus);
-      return;
+      runMutation(statusButton, "Salvando…", async () => {
+        const task = await fetchTask(statusButton.dataset.taskStatus);
+        const status = task.status === "concluida" ? "pendente" : "concluida";
+        await updateTask(task.id, { status });
+        await loadTasks();
+        showListFeedback(status === "concluida" ? "Tarefa marcada como concluída." : "Tarefa reaberta para acompanhamento.", "is-success");
+      });
+    } else if (deleteButton && !mutationPending) {
+      runMutation(deleteButton, "Abrindo…", async () => {
+        const task = await fetchTask(deleteButton.dataset.taskDelete);
+        openDeleteModal(task, deleteButton, () => confirmTaskDeletion(task));
+      });
     }
-    if (!deleteButton) return;
-    const task = getTasks().find((storedTask) => storedTask.id === deleteButton.dataset.taskDelete);
-    if (!task) {
-      showListFeedback("Essa tarefa já não existe na lista.", "is-error");
-      return;
-    }
-    openDeleteModal(task, deleteButton, () => confirmTaskDeletion(task.id));
   });
 };
 
 const initializeDashboard = () => {
-  const taskList = document.querySelector("[data-dashboard-tasks]");
-  if (!taskList) return;
-  taskList.addEventListener("click", (event) => {
-    const openButton = event.target.closest("[data-dashboard-view]");
-    if (!openButton) return;
-    const task = getTasks().find((storedTask) => storedTask.id === openButton.dataset.dashboardView);
-    if (!task) {
-      showListFeedback("Essa tarefa não foi encontrada. Atualize a página e tente novamente.", "is-error");
-      return;
-    }
-    openTaskDetails(task, openButton);
+  document.querySelector("[data-dashboard-tasks]")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-dashboard-view]");
+    if (!button) return;
+    runMutation(button, "…", async () => openTaskDetails(await fetchTask(button.dataset.dashboardView), button));
   });
 };
 
 export const initTasks = () => {
   if (!document.querySelector("[data-task-form], [data-task-table-body], [data-dashboard-tasks]")) return;
-  getTasks();
+  const toolbar = document.createElement("div");
+  toolbar.className = "task-sync-bar";
+  const state = document.createElement("p");
+  state.dataset.tasksState = "";
+  state.setAttribute("role", "status");
+  const retry = document.createElement("button");
+  retry.type = "button";
+  retry.dataset.tasksRetry = "";
+  retry.className = "button secondary";
+  retry.textContent = "Atualizar tarefas";
+  retry.addEventListener("click", loadTasks);
+  toolbar.append(state, retry);
+  document.querySelector(".page-intro").after(toolbar);
   initTaskModals();
   initializeTaskForm();
   initializeTaskList();
   initializeDashboard();
   window.addEventListener("storage", (event) => {
-    if (event.key === TASK_STORAGE_KEY) refreshTaskInterfaces();
+    if (!isApiMode && event.key === TASK_STORAGE_KEY) refreshTaskInterfaces();
   });
   window.addEventListener("studyflow:subjects-updated", refreshTaskInterfaces);
-  refreshTaskInterfaces();
+  loadTasks();
 };

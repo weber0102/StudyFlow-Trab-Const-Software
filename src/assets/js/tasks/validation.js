@@ -14,6 +14,7 @@ export const getTaskFormData = (form) => ({
 export const validateTask = (task) => {
   if (!task.title) return { field: "title", message: "Preencha o título da tarefa." };
   if (task.title.length < 3) return { field: "title", message: "O título deve ter pelo menos 3 caracteres." };
+  if (task.title.length > 100) return { field: "title", message: "O título pode ter no máximo 100 caracteres." };
   if (!getSubjects().includes(task.subject)) return { field: "subject", message: "Selecione uma matéria cadastrada." };
   if (task.description.length > 500) return { field: "description", message: "A descrição pode ter no máximo 500 caracteres." };
   if (!parseDate(task.dueDate)) return { field: "dueDate", message: "Informe uma data de entrega válida." };

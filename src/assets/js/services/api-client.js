@@ -1,9 +1,10 @@
 export class ApiError extends Error {
-  constructor(message, { status = null, cause = null } = {}) {
+  constructor(message, { status = null, cause = null, field = null } = {}) {
     super(message);
     this.name = "ApiError";
     this.status = status;
     this.cause = cause;
+    this.field = field;
   }
 }
 
@@ -16,8 +17,13 @@ export const requestJson = async (url, options = {}) => {
   }
 
   if (!response.ok) {
-    throw new ApiError(`O serviço respondeu com erro HTTP ${response.status}.`, { status: response.status });
+    const errorBody = await response.json().catch(() => null);
+    throw new ApiError(errorBody?.mensagem || `O serviço respondeu com erro HTTP ${response.status}.`, {
+      status: response.status, field: errorBody?.campo
+    });
   }
+
+  if (response.status === 204) return null;
 
   try {
     return await response.json();

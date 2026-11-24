@@ -1,4 +1,5 @@
 import { getDateOffset, hasOwn } from "../core/helpers.js";
+import { isApiMode } from "../services/config.js";
 
 export const TASK_STORAGE_KEY = "studyflow-tasks";
 export const priorityLabels = { alta: "Alta", media: "Média", baixa: "Baixa" };
@@ -6,6 +7,9 @@ export const priorityOrder = { alta: 0, media: 1, baixa: 2 };
 export const statusLabels = { pendente: "Pendente", concluida: "Concluída" };
 
 let memoryTasks = null;
+let apiTasks = [];
+
+export const replaceApiTasks = (tasks) => { apiTasks = tasks; };
 
 const createSeedTasks = () => [
   { id: "seed-1", title: "Protótipo estrutural em HTML", subject: "Construção de Software", description: "Organizar a estrutura semântica das telas.", dueDate: getDateOffset(2), priority: "alta", status: "pendente", createdAt: new Date().toISOString() },
@@ -35,6 +39,7 @@ export const saveTasks = (tasks) => {
 };
 
 export const getTasks = () => {
+  if (isApiMode) return apiTasks;
   let savedTasks;
   try {
     savedTasks = localStorage.getItem(TASK_STORAGE_KEY);

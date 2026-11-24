@@ -1,0 +1,189 @@
+{
+  "generatedAt": "2026-11-24T18:03:07.453Z",
+  "tool": "Node.js Fetch - requisições HTTP reais em instância isolada",
+  "records": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:62664/api/tarefas",
+      "requestBody": null,
+      "status": 200,
+      "responseBody": [
+        {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "title": "Protótipo estrutural em HTML",
+          "subject": "Construção de Software",
+          "description": "Atividade acadêmica de demonstração.",
+          "dueDate": "2026-11-26",
+          "priority": "alta",
+          "status": "pendente",
+          "createdAt": "2026-11-24T18:03:07.380Z"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "title": "Documentar decisões da etapa",
+          "subject": "Construção de Software",
+          "description": "Atividade acadêmica de demonstração.",
+          "dueDate": "2026-11-27",
+          "priority": "media",
+          "status": "pendente",
+          "createdAt": "2026-11-24T18:03:07.380Z"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "title": "Lista de exercícios 4",
+          "subject": "Cálculo I",
+          "description": "Atividade acadêmica de demonstração.",
+          "dueDate": "2026-11-29",
+          "priority": "media",
+          "status": "pendente",
+          "createdAt": "2026-11-24T18:03:07.380Z"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "title": "Leitura do capítulo 6",
+          "subject": "Banco de Dados",
+          "description": "Atividade acadêmica de demonstração.",
+          "dueDate": "2026-12-01",
+          "priority": "baixa",
+          "status": "pendente",
+          "createdAt": "2026-11-24T18:03:07.380Z"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000005",
+          "title": "Revisar normalização",
+          "subject": "Banco de Dados",
+          "description": "Atividade acadêmica de demonstração.",
+          "dueDate": "2026-11-22",
+          "priority": "baixa",
+          "status": "concluida",
+          "createdAt": "2026-11-24T18:03:07.380Z"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000006",
+          "title": "Resumo da aula 3",
+          "subject": "Cálculo I",
+          "description": "Atividade acadêmica de demonstração.",
+          "dueDate": "2026-11-20",
+          "priority": "baixa",
+          "status": "concluida",
+          "createdAt": "2026-11-24T18:03:07.380Z"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:62664/api/tarefas",
+      "requestBody": {
+        "title": "Apresentar o CRUD",
+        "subject": "Construção de Software",
+        "dueDate": "2099-12-10",
+        "priority": "alta",
+        "status": "pendente",
+        "description": "Etapa 06"
+      },
+      "status": 201,
+      "responseBody": {
+        "id": "8d9c9d87-6cbb-4926-a2b5-1ab9a1fc0e61",
+        "title": "Apresentar o CRUD",
+        "subject": "Construção de Software",
+        "description": "Etapa 06",
+        "dueDate": "2099-12-10",
+        "priority": "alta",
+        "status": "pendente",
+        "createdAt": "2026-11-24T18:03:07.442Z"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:62664/api/tarefas/8d9c9d87-6cbb-4926-a2b5-1ab9a1fc0e61",
+      "requestBody": null,
+      "status": 200,
+      "responseBody": {
+        "id": "8d9c9d87-6cbb-4926-a2b5-1ab9a1fc0e61",
+        "title": "Apresentar o CRUD",
+        "subject": "Construção de Software",
+        "description": "Etapa 06",
+        "dueDate": "2099-12-10",
+        "priority": "alta",
+        "status": "pendente",
+        "createdAt": "2026-11-24T18:03:07.442Z"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:62664/api/tarefas",
+      "requestBody": {
+        "title": "   "
+      },
+      "status": 400,
+      "responseBody": {
+        "erro": "DADOS_INVALIDOS",
+        "mensagem": "O campo title deve ter entre 3 e 100 caracteres.",
+        "campo": "title"
+      }
+    },
+    {
+      "method": "PATCH",
+      "url": "http://127.0.0.1:62664/api/tarefas/8d9c9d87-6cbb-4926-a2b5-1ab9a1fc0e61",
+      "requestBody": {
+        "status": "concluida"
+      },
+      "status": 200,
+      "responseBody": {
+        "id": "8d9c9d87-6cbb-4926-a2b5-1ab9a1fc0e61",
+        "title": "Apresentar o CRUD",
+        "subject": "Construção de Software",
+        "description": "Etapa 06",
+        "dueDate": "2099-12-10",
+        "priority": "alta",
+        "status": "concluida",
+        "createdAt": "2026-11-24T18:03:07.442Z",
+        "updatedAt": "2026-11-24T18:03:07.448Z"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:62664/api/tarefas/8d9c9d87-6cbb-4926-a2b5-1ab9a1fc0e61",
+      "requestBody": null,
+      "status": 200,
+      "responseBody": {
+        "id": "8d9c9d87-6cbb-4926-a2b5-1ab9a1fc0e61",
+        "title": "Apresentar o CRUD",
+        "subject": "Construção de Software",
+        "description": "Etapa 06",
+        "dueDate": "2099-12-10",
+        "priority": "alta",
+        "status": "concluida",
+        "createdAt": "2026-11-24T18:03:07.442Z",
+        "updatedAt": "2026-11-24T18:03:07.448Z"
+      }
+    },
+    {
+      "method": "DELETE",
+      "url": "http://127.0.0.1:62664/api/tarefas/8d9c9d87-6cbb-4926-a2b5-1ab9a1fc0e61",
+      "requestBody": null,
+      "status": 204,
+      "responseBody": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:62664/api/tarefas/8d9c9d87-6cbb-4926-a2b5-1ab9a1fc0e61",
+      "requestBody": null,
+      "status": 404,
+      "responseBody": {
+        "erro": "TAREFA_NAO_ENCONTRADA",
+        "mensagem": "Tarefa não encontrada."
+      }
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:62664/api/tarefas/abc",
+      "requestBody": null,
+      "status": 400,
+      "responseBody": {
+        "erro": "ID_INVALIDO",
+        "mensagem": "O ID deve ser um UUID válido."
+      }
+    }
+  ]
+}

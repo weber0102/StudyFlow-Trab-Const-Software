@@ -1,4 +1,5 @@
 import { initAuth } from "./auth.js";
+import { initDataMode } from "./core/data-mode.js";
 import { initStudyPanel } from "./dashboard/study-panel.js";
 import { initNavigation } from "./navigation.js";
 import { initSubjects } from "./subjects.js";
@@ -9,6 +10,7 @@ const initializeApplication = () => {
   initTheme();
   initNavigation();
   initAuth();
+  initDataMode();
   initSubjects();
   initTasks();
   initStudyPanel();

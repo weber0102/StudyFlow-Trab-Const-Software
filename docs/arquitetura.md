@@ -31,3 +31,11 @@ A estrutura foi evoluída para módulos nativos do JavaScript, carregados por `m
 O painel inicial agora consulta um JSON acadêmico por `fetch()` e envia check-ins por `POST` a um serviço REST simulado. A camada `api-client.js` concentra a comunicação HTTP, incluindo `response.ok`, JSON e erros de rede, enquanto `study-service.js` concentra os endpoints. Essa organização preserva o protótipo de tarefas local e permite a evolução incremental para uma API real nas próximas etapas.
 
 Para a documentação detalhada da modularização, consulte [etapa-05.md](etapa-05.md).
+
+## Evolução implementada — Etapa 06
+
+O backend em `backend/` usa Express e ES Modules. `server.js` abre a porta; `app.js` configura JSON, CORS, rotas e entrega do front-end. O recurso `/api/tarefas` possui router, controller, service, validação e armazenamento em memória separados. Endpoints auxiliares fornecem recomendações e check-ins para aproveitar os fluxos assíncronos da Etapa 05.
+
+A interface conversa com a API através de `services/task-service.js`, `study-service.js` e `api-client.js`. A configuração entregue pelo Express ativa `/api` na mesma origem. O arquivo estático de configuração mantém a demonstração local utilizável no Pages. Não existe troca automática para dados locais ao ocorrer uma falha da API.
+
+Os arrays de tarefas e check-ins pertencem a cada instância da aplicação e são reiniciados com o processo. Não há autenticação de servidor nem banco de dados; matérias e conta demonstrativa permanecem locais. Consulte [etapa-06.md](etapa-06.md) para contratos HTTP, limitações, execução, testes e evidências.

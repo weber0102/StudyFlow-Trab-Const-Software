@@ -45,6 +45,9 @@
 ========================== */
 
 @media (max-width: 37.5rem) {
+  .task-sync-bar { align-items: stretch; flex-direction: column; }
+  .task-sync-bar .async-state { flex-basis: auto; }
+  .task-sync-bar .button { width: 100%; }
   .header-content,
   .page-shell,
   .footer-content {

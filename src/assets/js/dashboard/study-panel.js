@@ -1,11 +1,14 @@
 import { clearInvalidFields, setButtonLoading, setFeedback, setFormFieldInvalid } from "../core/feedback.js";
 import { createId, normalizeText } from "../core/helpers.js";
 import { getSubjects } from "../subjects.js";
-import { loadRecommendations, submitStudyCheckin } from "../services/study-service.js";
+import { loadRecommendations, loadStudyCheckins, submitStudyCheckin } from "../services/study-service.js";
+import { isApiMode } from "../services/config.js";
 
 const checkinStorageKey = "studyflow-study-checkins";
+let serverHistory = [];
 
 const getCheckinHistory = () => {
+  if (isApiMode) return serverHistory;
   try {
     const savedHistory = JSON.parse(localStorage.getItem(checkinStorageKey));
     return Array.isArray(savedHistory) ? savedHistory.filter((entry) => entry && typeof entry.subject === "string") : [];
@@ -15,6 +18,7 @@ const getCheckinHistory = () => {
 };
 
 const saveCheckinHistory = (history) => {
+  if (isApiMode) { serverHistory = history; return true; }
   try {
     localStorage.setItem(checkinStorageKey, JSON.stringify(history));
     return true;
@@ -132,6 +136,7 @@ const initializeCheckinForm = () => {
   });
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (submitButton.disabled) return;
     clearInvalidFields(form);
     const checkin = {
       subject: form.elements.subject.value,
@@ -145,7 +150,7 @@ const initializeCheckinForm = () => {
     }
 
     setButtonLoading(submitButton, true, "Enviando check-in…");
-    setFeedback("[data-checkin-feedback]", "Enviando seus dados ao serviço simulado…");
+    setFeedback("[data-checkin-feedback]", "Enviando seu check-in…");
     try {
       const savedCheckin = await submitStudyCheckin(checkin);
       const history = [{ id: createId(`checkin-${savedCheckin.serverId}`), ...savedCheckin, createdAt: new Date().toISOString() }, ...getCheckinHistory()];
@@ -170,4 +175,11 @@ export const initStudyPanel = () => {
   document.querySelector("[data-recommendations-retry]")?.addEventListener("click", loadRecommendationPanel);
   window.addEventListener("studyflow:subjects-updated", populateCheckinSubjects);
   loadRecommendationPanel();
+  if (isApiMode) {
+    loadStudyCheckins().then((history) => {
+      if (!Array.isArray(history)) throw new Error("O histórico recebido é inválido.");
+      serverHistory = history;
+      renderCheckinHistory();
+    }).catch((error) => setFeedback("[data-checkin-feedback]", `Não foi possível consultar o histórico. ${error.message}`, "is-error"));
+  }
 };

@@ -80,6 +80,10 @@ const ensureDeleteModal = () => {
   const actions = document.createElement("div");
   const cancelButton = document.createElement("button");
   const confirmButton = document.createElement("button");
+  const feedback = document.createElement("p");
+  feedback.className = "form-feedback";
+  feedback.dataset.taskModalFeedback = "";
+  feedback.setAttribute("aria-live", "polite");
 
   overlay.className = "task-modal";
   overlay.hidden = true;
@@ -103,7 +107,7 @@ const ensureDeleteModal = () => {
   confirmButton.dataset.taskModalConfirm = "";
   confirmButton.textContent = "Excluir tarefa";
   actions.append(cancelButton, confirmButton);
-  dialog.append(title, description, actions);
+  dialog.append(title, description, feedback, actions);
   overlay.append(dialog);
   document.body.append(overlay);
   overlay.addEventListener("click", (event) => {
@@ -141,7 +145,8 @@ export const openDeleteModal = (task, trigger, confirmHandler) => {
   const modal = ensureDeleteModal();
   onConfirmDeletion = confirmHandler;
   lastDeleteTrigger = trigger || null;
-  modal.querySelector("[data-task-modal-description]").textContent = `“${task.title}” será removida permanentemente deste navegador.`;
+  modal.querySelector("[data-task-modal-feedback]").textContent = "";
+  modal.querySelector("[data-task-modal-description]").textContent = `“${task.title}” será excluída da lista de tarefas. Esta ação não pode ser desfeita.`;
   modal.hidden = false;
   document.body.classList.add("modal-open");
   modal.querySelector("[data-task-modal-cancel]").focus();
