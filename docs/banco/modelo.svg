@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="550" viewBox="0 0 1100 550" role="img" aria-labelledby="title description">
+  <title id="title">Modelo relacional do StudyFlow</title>
+  <desc id="description">Uma matéria possui muitas tarefas e muitos check-ins. As duas relações usam chaves estrangeiras e impedem a exclusão de matérias vinculadas.</desc>
+  <rect width="1100" height="550" fill="#f7f9ff"/>
+  <g font-family="Arial, sans-serif" fill="#17213a">
+    <text x="45" y="48" font-size="26" font-weight="bold">StudyFlow — modelo relacional</text>
+    <text x="45" y="78" font-size="16">SQLite · UUIDs · integridade referencial · ON DELETE RESTRICT</text>
+    <g stroke="#b8c3df" fill="white" stroke-width="2">
+      <rect x="45" y="180" width="280" height="210" rx="12"/>
+      <rect x="650" y="110" width="400" height="205" rx="12"/>
+      <rect x="650" y="350" width="400" height="150" rx="12"/>
+    </g>
+    <g font-size="18">
+      <text x="65" y="215" font-weight="bold" fill="#4f46e5">SUBJECTS — matérias</text>
+      <text x="65" y="250">PK id</text><text x="65" y="279">name · name_key UNIQUE</text>
+      <text x="65" y="308">created_at · updated_at</text>
+      <text x="670" y="145" font-weight="bold" fill="#4f46e5">TASKS — tarefas</text>
+      <text x="670" y="180">PK id · FK subject_id</text>
+      <text x="670" y="209">title · title_key · description</text>
+      <text x="670" y="238">due_date · priority · status</text>
+      <text x="670" y="267">created_at · updated_at</text>
+      <text x="670" y="385" font-weight="bold" fill="#4f46e5">CHECKINS — sessões de estudo</text>
+      <text x="670" y="420">PK id · FK subject_id</text>
+      <text x="670" y="449">minutes · note · created_at</text>
+    </g>
+    <g fill="none" stroke="#4f46e5" stroke-width="3">
+      <path d="M325 255 H490 V205 H650"/><path d="M325 310 H490 V425 H650"/>
+    </g>
+    <g font-size="18" fill="#3730a3" font-weight="bold">
+      <text x="345" y="240">1</text><text x="601" y="190">0..N</text>
+      <text x="345" y="335">1</text><text x="601" y="410">0..N</text>
+    </g>
+    <text x="45" y="480" font-size="15">Uma tarefa ou sessão de estudo</text>
+    <text x="45" y="503" font-size="15">sempre referencia uma matéria existente.</text>
+  </g>
+</svg>

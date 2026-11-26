@@ -1,0 +1,266 @@
+{
+  "executedAt": "2026-11-26T18:02:45.321Z",
+  "database": "SQLite em arquivo isolado",
+  "processes": [
+    {
+      "phase": "antes do reinício",
+      "pid": 31128
+    },
+    {
+      "phase": "após primeiro reinício",
+      "pid": 24520
+    },
+    {
+      "phase": "após segundo reinício",
+      "pid": 13952
+    }
+  ],
+  "records": [
+    {
+      "phase": "antes",
+      "method": "POST",
+      "path": "/api/materias",
+      "requestBody": {
+        "name": "Matéria persistente"
+      },
+      "status": 201,
+      "responseBody": {
+        "id": "aff0fb1d-2d5f-4a87-8c98-84ab1d430cc3",
+        "name": "Matéria persistente",
+        "createdAt": "2026-11-26T18:02:45.534Z",
+        "updatedAt": null
+      }
+    },
+    {
+      "phase": "antes",
+      "method": "POST",
+      "path": "/api/tarefas",
+      "requestBody": {
+        "title": "Tarefa que deve permanecer",
+        "subjectId": "aff0fb1d-2d5f-4a87-8c98-84ab1d430cc3",
+        "dueDate": "2099-12-10",
+        "priority": "alta"
+      },
+      "status": 201,
+      "responseBody": {
+        "id": "dd37af7e-1fe9-4cd2-80f3-9cea683af63e",
+        "title": "Tarefa que deve permanecer",
+        "subject": "Matéria persistente",
+        "subjectId": "aff0fb1d-2d5f-4a87-8c98-84ab1d430cc3",
+        "description": "",
+        "dueDate": "2099-12-10",
+        "priority": "alta",
+        "status": "pendente",
+        "createdAt": "2026-11-26T18:02:45.545Z",
+        "updatedAt": null
+      }
+    },
+    {
+      "phase": "antes",
+      "method": "PATCH",
+      "path": "/api/tarefas/dd37af7e-1fe9-4cd2-80f3-9cea683af63e",
+      "requestBody": {
+        "status": "concluida"
+      },
+      "status": 200,
+      "responseBody": {
+        "id": "dd37af7e-1fe9-4cd2-80f3-9cea683af63e",
+        "title": "Tarefa que deve permanecer",
+        "subject": "Matéria persistente",
+        "subjectId": "aff0fb1d-2d5f-4a87-8c98-84ab1d430cc3",
+        "description": "",
+        "dueDate": "2099-12-10",
+        "priority": "alta",
+        "status": "concluida",
+        "createdAt": "2026-11-26T18:02:45.545Z",
+        "updatedAt": "2026-11-26T18:02:45.550Z"
+      }
+    },
+    {
+      "phase": "antes",
+      "method": "GET",
+      "path": "/api/tarefas/dd37af7e-1fe9-4cd2-80f3-9cea683af63e",
+      "requestBody": null,
+      "status": 200,
+      "responseBody": {
+        "id": "dd37af7e-1fe9-4cd2-80f3-9cea683af63e",
+        "title": "Tarefa que deve permanecer",
+        "subject": "Matéria persistente",
+        "subjectId": "aff0fb1d-2d5f-4a87-8c98-84ab1d430cc3",
+        "description": "",
+        "dueDate": "2099-12-10",
+        "priority": "alta",
+        "status": "concluida",
+        "createdAt": "2026-11-26T18:02:45.545Z",
+        "updatedAt": "2026-11-26T18:02:45.550Z"
+      }
+    },
+    {
+      "phase": "antes",
+      "method": "POST",
+      "path": "/api/checkins",
+      "requestBody": {
+        "subjectId": "aff0fb1d-2d5f-4a87-8c98-84ab1d430cc3",
+        "minutes": 45,
+        "note": "Persistência real"
+      },
+      "status": 201,
+      "responseBody": {
+        "id": "d6e6e61a-d332-46bc-b9e4-f259d1ca69b7",
+        "subjectId": "aff0fb1d-2d5f-4a87-8c98-84ab1d430cc3",
+        "subject": "Matéria persistente",
+        "minutes": 45,
+        "note": "Persistência real",
+        "createdAt": "2026-11-26T18:02:45.557Z"
+      }
+    },
+    {
+      "phase": "depois",
+      "method": "GET",
+      "path": "/api/tarefas/dd37af7e-1fe9-4cd2-80f3-9cea683af63e",
+      "requestBody": null,
+      "status": 200,
+      "responseBody": {
+        "id": "dd37af7e-1fe9-4cd2-80f3-9cea683af63e",
+        "title": "Tarefa que deve permanecer",
+        "subject": "Matéria persistente",
+        "subjectId": "aff0fb1d-2d5f-4a87-8c98-84ab1d430cc3",
+        "description": "",
+        "dueDate": "2099-12-10",
+        "priority": "alta",
+        "status": "concluida",
+        "createdAt": "2026-11-26T18:02:45.545Z",
+        "updatedAt": "2026-11-26T18:02:45.550Z"
+      }
+    },
+    {
+      "phase": "depois",
+      "method": "GET",
+      "path": "/api/checkins",
+      "requestBody": null,
+      "status": 200,
+      "responseBody": [
+        {
+          "id": "d6e6e61a-d332-46bc-b9e4-f259d1ca69b7",
+          "subjectId": "aff0fb1d-2d5f-4a87-8c98-84ab1d430cc3",
+          "subject": "Matéria persistente",
+          "minutes": 45,
+          "note": "Persistência real",
+          "createdAt": "2026-11-26T18:02:45.557Z"
+        }
+      ]
+    },
+    {
+      "phase": "depois",
+      "method": "GET",
+      "path": "/api/materias/aff0fb1d-2d5f-4a87-8c98-84ab1d430cc3",
+      "requestBody": null,
+      "status": 200,
+      "responseBody": {
+        "id": "aff0fb1d-2d5f-4a87-8c98-84ab1d430cc3",
+        "name": "Matéria persistente",
+        "createdAt": "2026-11-26T18:02:45.534Z",
+        "updatedAt": null
+      }
+    },
+    {
+      "phase": "depois",
+      "method": "DELETE",
+      "path": "/api/materias/aff0fb1d-2d5f-4a87-8c98-84ab1d430cc3",
+      "requestBody": null,
+      "status": 409,
+      "responseBody": {
+        "erro": "MATERIA_EM_USO",
+        "mensagem": "Esta matéria possui tarefas ou check-ins vinculados e não pode ser removida."
+      }
+    },
+    {
+      "phase": "depois",
+      "method": "DELETE",
+      "path": "/api/tarefas/dd37af7e-1fe9-4cd2-80f3-9cea683af63e",
+      "requestBody": null,
+      "status": 204,
+      "responseBody": null
+    },
+    {
+      "phase": "terceiro processo",
+      "method": "GET",
+      "path": "/api/tarefas/dd37af7e-1fe9-4cd2-80f3-9cea683af63e",
+      "requestBody": null,
+      "status": 404,
+      "responseBody": {
+        "erro": "TAREFA_NAO_ENCONTRADA",
+        "mensagem": "Tarefa não encontrada."
+      }
+    }
+  ],
+  "schema": [
+    {
+      "name": "schema_migrations",
+      "sql": "CREATE TABLE schema_migrations (version INTEGER PRIMARY KEY, applied_at TEXT NOT NULL) STRICT"
+    },
+    {
+      "name": "subjects",
+      "sql": "CREATE TABLE subjects (\n  id TEXT PRIMARY KEY NOT NULL,\n  name TEXT NOT NULL CHECK(length(trim(name)) BETWEEN 1 AND 60),\n  name_key TEXT NOT NULL UNIQUE CHECK(length(name_key) > 0),\n  created_at TEXT NOT NULL,\n  updated_at TEXT\n) STRICT"
+    },
+    {
+      "name": "tasks",
+      "sql": "CREATE TABLE tasks (\n  id TEXT PRIMARY KEY NOT NULL,\n  subject_id TEXT NOT NULL REFERENCES subjects(id) ON DELETE RESTRICT,\n  title TEXT NOT NULL CHECK(length(trim(title)) BETWEEN 3 AND 100),\n  title_key TEXT NOT NULL CHECK(length(title_key) > 0),\n  description TEXT NOT NULL DEFAULT '' CHECK(length(description) <= 500),\n  due_date TEXT NOT NULL CHECK(length(due_date) = 10 AND date(due_date, '+0 days') IS NOT NULL AND date(due_date, '+0 days') = due_date),\n  priority TEXT NOT NULL CHECK(priority IN ('alta', 'media', 'baixa')),\n  status TEXT NOT NULL DEFAULT 'pendente' CHECK(status IN ('pendente', 'concluida')),\n  created_at TEXT NOT NULL,\n  updated_at TEXT,\n  UNIQUE(title_key, subject_id, due_date)\n) STRICT"
+    },
+    {
+      "name": "checkins",
+      "sql": "CREATE TABLE checkins (\n  id TEXT PRIMARY KEY NOT NULL,\n  subject_id TEXT NOT NULL REFERENCES subjects(id) ON DELETE RESTRICT,\n  minutes INTEGER NOT NULL CHECK(minutes BETWEEN 1 AND 600),\n  note TEXT NOT NULL DEFAULT '' CHECK(length(note) <= 180),\n  created_at TEXT NOT NULL\n) STRICT"
+    },
+    {
+      "name": "seed_runs",
+      "sql": "CREATE TABLE seed_runs (\n  name TEXT PRIMARY KEY NOT NULL,\n  applied_at TEXT NOT NULL\n) STRICT"
+    }
+  ],
+  "foreignKeys": [
+    {
+      "id": 0,
+      "seq": 0,
+      "table": "subjects",
+      "from": "subject_id",
+      "to": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "RESTRICT",
+      "match": "NONE"
+    }
+  ],
+  "integrity": {
+    "integrity_check": "ok"
+  },
+  "foreignKeyViolations": [],
+  "result": "APROVADO: criação, alteração, matéria e check-in persistiram entre processos; exclusão permaneceu após novo reinício.",
+  "errors": [
+    {
+      "method": "POST",
+      "path": "/api/tarefas",
+      "requestBody": {
+        "title": "Referência inválida",
+        "subjectId": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+        "dueDate": "2099-12-10",
+        "priority": "alta"
+      },
+      "status": 400,
+      "responseBody": {
+        "erro": "REFERENCIA_INVALIDA",
+        "mensagem": "Cadastre ou selecione uma matéria existente.",
+        "campo": "subject"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/materias",
+      "requestBody": {
+        "name": "Gravação indisponível"
+      },
+      "status": 503,
+      "responseBody": {
+        "erro": "PERSISTENCIA_INDISPONIVEL",
+        "mensagem": "Não foi possível acessar o banco de dados. Tente novamente em instantes."
+      }
+    }
+  ]
+}

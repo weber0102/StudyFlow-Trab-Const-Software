@@ -1,10 +1,9 @@
 import { Router } from "express";
 import { createTaskController } from "../controllers/task.controller.js";
-import { createTaskService } from "../services/task.service.js";
 
-export const createTaskRouter = (store) => {
+export const createTaskRouter = (service) => {
   const router = Router();
-  const controller = createTaskController(createTaskService(store));
+  const controller = createTaskController(service);
   router.get("/", controller.list);
   router.get("/:id", controller.get);
   router.post("/", controller.create);

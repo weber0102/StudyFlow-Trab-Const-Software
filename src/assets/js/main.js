@@ -6,12 +6,12 @@ import { initSubjects } from "./subjects.js";
 import { initTasks } from "./tasks/controller.js";
 import { initTheme } from "./theme.js";
 
-const initializeApplication = () => {
+const initializeApplication = async () => {
   initTheme();
   initNavigation();
   initAuth();
   initDataMode();
-  initSubjects();
+  await initSubjects();
   initTasks();
   initStudyPanel();
 };

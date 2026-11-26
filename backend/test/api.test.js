@@ -1,15 +1,22 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createApp } from "../src/app.js";
-import { createStore } from "../src/data/store.js";
+import { openDatabase } from "../src/database/connection.js";
+import { seedDatabase } from "../src/database/seeds/demo.js";
+import { createSubjectService } from "../src/services/subject.service.js";
+import { createSubjectRepository } from "../src/repositories/subject.repository.js";
 
 const missingId = "ffffffff-ffff-4fff-8fff-ffffffffffff";
 const payload = { title: "Preparar apresentação", subject: "Construção de Software", description: "Apresentar o CRUD.", dueDate: "2099-12-10", priority: "alta", status: "pendente" };
 
 const startApi = async (context, options = {}) => {
-  const server = createApp({ store: createStore({ seed: false }), ...options }).listen(0, "127.0.0.1");
+  const database = options.database || openDatabase({ filename: ":memory:" });
+  const subjects = createSubjectService(createSubjectRepository(database));
+  if (options.seed) seedDatabase(database);
+  else for (const name of ["Construção de Software", "Cálculo I", "Banco de Dados"]) subjects.create({ name });
+  const server = createApp({ ...options, database }).listen(0, "127.0.0.1");
   await new Promise((resolve) => server.once("listening", resolve));
-  context.after(() => { server.closeAllConnections(); return new Promise((resolve) => server.close(resolve)); });
+  context.after(() => { server.closeAllConnections(); return new Promise((resolve) => server.close(() => { database.close(); resolve(); })); });
   const base = `http://127.0.0.1:${server.address().port}`;
   const request = async (method, path, body, headers = {}) => {
     const response = await fetch(base + path, { method, headers: { ...(body !== undefined ? { "Content-Type": "application/json" } : {}), ...headers }, body: body === undefined ? undefined : JSON.stringify(body) });
@@ -84,9 +91,8 @@ test("GET, PATCH e DELETE validam UUID e tratam ID inexistente", async (context)
 });
 
 test("PATCH inválido não altera o recurso e permite concluir tarefa atrasada", async (context) => {
-  const store = createStore();
-  const { request } = await startApi(context, { store });
-  const task = store.tasks.at(-1);
+  const { request } = await startApi(context, { seed: true });
+  const task = (await request("GET", "/api/tarefas")).body.at(-1);
   for (const body of [{}, [], null, { status: "x" }, { title: " " }, { dueDate: "errada" }, { id: "x" }, { description: null }]) {
     assert.equal((await request("PATCH", `/api/tarefas/${task.id}`, body)).status, 400);
   }
@@ -121,9 +127,8 @@ test("serviços da Etapa 05 usam a API própria: recomendações e check-ins", a
 });
 
 test("erro interno retorna JSON controlado sem stack ou caminho local", async (context) => {
-  const store = createStore({ seed: false });
-  Object.defineProperty(store, "tasks", { get() { throw new Error("detalhe-interno-privado"); } });
-  const { request } = await startApi(context, { store });
+  const tasks = { list() { throw new Error("detalhe-interno-privado"); } };
+  const { request } = await startApi(context, { repositories: { tasks } });
   const originalError = console.error;
   console.error = () => {};
   try {

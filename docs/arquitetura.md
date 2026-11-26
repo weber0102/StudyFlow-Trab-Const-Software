@@ -39,3 +39,11 @@ O backend em `backend/` usa Express e ES Modules. `server.js` abre a porta; `app
 A interface conversa com a API através de `services/task-service.js`, `study-service.js` e `api-client.js`. A configuração entregue pelo Express ativa `/api` na mesma origem. O arquivo estático de configuração mantém a demonstração local utilizável no Pages. Não existe troca automática para dados locais ao ocorrer uma falha da API.
 
 Os arrays de tarefas e check-ins pertencem a cada instância da aplicação e são reiniciados com o processo. Não há autenticação de servidor nem banco de dados; matérias e conta demonstrativa permanecem locais. Consulte [etapa-06.md](etapa-06.md) para contratos HTTP, limitações, execução, testes e evidências.
+
+## Evolução implementada — Etapa 07
+
+A fonte em memória foi substituída por SQLite em arquivo. `database/connection.js` configura a conexão e aplica migrações versionadas; `repositories/` concentra SQL parametrizado. Services recebem esses repositories, mantendo controllers e rotas separados do armazenamento.
+
+Matérias passaram ao banco e possuem duas relações 1:N: tarefas e check-ins. Chaves estrangeiras e ON DELETE RESTRICT impedem excluir disciplinas em uso. Tarefas continuam retornando o campo textual `subject` por JOIN, além de `subjectId`. O seed é opcional, transacional e registrado uma única vez.
+
+A interface aguarda a consulta de matérias antes de preencher os formulários e utiliza GET/POST/PATCH/DELETE no catálogo. Conta demonstrativa e preferências permanecem locais. A persistência foi verificada encerrando e iniciando processos reais do servidor sobre o mesmo arquivo. O esquema, as instruções e os resultados estão em [etapa-07.md](etapa-07.md) e [banco/modelo.md](banco/modelo.md).

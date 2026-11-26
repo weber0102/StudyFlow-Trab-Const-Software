@@ -1,12 +1,23 @@
 import express from "express";
 import { fileURLToPath } from "node:url";
-import { createStore } from "./data/store.js";
+import { openDatabase } from "./database/connection.js";
+import { createTaskRepository } from "./repositories/task.repository.js";
+import { createSubjectRepository } from "./repositories/subject.repository.js";
+import { createCheckinRepository } from "./repositories/checkin.repository.js";
+import { createTaskService } from "./services/task.service.js";
+import { createSubjectService } from "./services/subject.service.js";
+import { createStudyService } from "./services/study.service.js";
+import { createSubjectRouter } from "./routes/subject.routes.js";
 import { HttpError, errorHandler } from "./errors.js";
 import { createTaskRouter } from "./routes/task.routes.js";
 import { createStudyRouter } from "./routes/study.routes.js";
 
-export const createApp = ({ store = createStore(), allowedOrigins = [] } = {}) => {
+export const createApp = ({ database = openDatabase(), allowedOrigins = [], repositories = {} } = {}) => {
   const app = express();
+  app.locals.database = database;
+  const subjects = repositories.subjects || createSubjectRepository(database);
+  const tasks = repositories.tasks || createTaskRepository(database);
+  const checkins = repositories.checkins || createCheckinRepository(database);
   app.disable("x-powered-by");
   app.use("/api", (request, response, next) => {
     response.set("Cache-Control", "no-store");
@@ -26,8 +37,9 @@ export const createApp = ({ store = createStore(), allowedOrigins = [] } = {}) =
     next();
   });
   app.use("/api", express.json({ limit: "16kb", strict: false }));
-  app.use("/api/tarefas", createTaskRouter(store));
-  app.use("/api", createStudyRouter(store));
+  app.use("/api/tarefas", createTaskRouter(createTaskService(tasks, subjects)));
+  app.use("/api/materias", createSubjectRouter(createSubjectService(subjects)));
+  app.use("/api", createStudyRouter(createStudyService(checkins, subjects)));
   app.use("/api", (request, response, next) => next(new HttpError(404, "ROTA_NAO_ENCONTRADA", "Rota da API não encontrada.")));
 
   // O Pages usa o arquivo estático; o servidor ativa a API na mesma origem.

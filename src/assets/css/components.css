@@ -185,4 +185,8 @@ body.modal-open { overflow: hidden; }
 .task-sync-bar .async-state { flex: 1 1 20rem; margin: 0; }
 .task-sync-bar .async-state.is-success::before { border: 0; content: "✓"; color: var(--success); }
 .task-sync-bar .button { flex: 0 0 auto; }
+.subject-item { min-width: 0; grid-template-columns: auto minmax(0, 1fr); }
+.subject-item strong { overflow-wrap: anywhere; }
+.subject-item .task-actions { grid-column: 1 / -1; justify-content: flex-end; }
+.form-actions [hidden] { display: none; }
 .task-modal__dialog { max-height: calc(100dvh - 2rem); overflow-y: auto; }

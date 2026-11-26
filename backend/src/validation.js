@@ -19,7 +19,7 @@ export const validateBody = (body, fields) => {
 
 export const textField = (value, field, minimum, maximum) => {
   if (typeof value !== "string") invalid(`O campo ${field} deve ser um texto.`, field);
-  const text = value.trim().replace(/\s+/g, " ");
+  const text = value.normalize("NFC").trim().replace(/\s+/g, " ");
   if (text.length < minimum || text.length > maximum) invalid(`O campo ${field} deve ter entre ${minimum} e ${maximum} caracteres.`, field);
   return text;
 };
@@ -35,13 +35,14 @@ const validateDate = (value, enforceFuture) => {
 };
 
 export const validateTask = (body, { partial = false } = {}) => {
-  const fields = ["title", "subject", "description", "dueDate", "priority", "status"];
+  const fields = ["title", "subject", "subjectId", "description", "dueDate", "priority", "status"];
   validateBody(body, fields);
   const result = {};
   for (const field of partial ? fields.filter((key) => own(body, key)) : fields) {
     const value = body[field];
     if (field === "title") result.title = textField(value, field, 3, 100);
-    if (field === "subject") result.subject = textField(value, field, 1, 60);
+    if (field === "subject" && value !== undefined) result.subject = textField(value, field, 1, 60);
+    if (field === "subjectId" && value !== undefined) result.subjectId = validateId(value);
     if (field === "description") result.description = textField(value === undefined ? "" : value, field, 0, 500);
     if (field === "dueDate") result.dueDate = validateDate(value, true);
     if (field === "priority") {
@@ -53,12 +54,16 @@ export const validateTask = (body, { partial = false } = {}) => {
       if (!["pendente", "concluida"].includes(result.status)) invalid("Selecione um status válido: pendente ou concluida.", field);
     }
   }
+  if (!partial && !result.subject && !result.subjectId) invalid("Informe uma matéria existente.", "subject");
   return result;
 };
 
 export const validateCheckin = (body) => {
-  validateBody(body, ["subject", "minutes", "note"]);
-  const subject = textField(body.subject, "subject", 1, 60);
+  validateBody(body, ["subject", "subjectId", "minutes", "note"]);
+  const relation = {};
+  if (body.subject !== undefined) relation.subject = textField(body.subject, "subject", 1, 60);
+  if (body.subjectId !== undefined) relation.subjectId = validateId(body.subjectId);
+  if (!relation.subject && !relation.subjectId) invalid("Informe uma matéria existente.", "subject");
   if (!Number.isInteger(body.minutes) || body.minutes < 1 || body.minutes > 600) invalid("Informe uma duração inteira entre 1 e 600 minutos.", "minutes");
-  return { subject, minutes: body.minutes, note: textField(body.note === undefined ? "" : body.note, "note", 0, 180) };
+  return { ...relation, minutes: body.minutes, note: textField(body.note === undefined ? "" : body.note, "note", 0, 180) };
 };

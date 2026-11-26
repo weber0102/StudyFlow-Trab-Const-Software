@@ -162,7 +162,7 @@ export const setTaskFormSuccess = (message) => {
   if (!feedback) return;
   const link = document.createElement("a");
   link.className = "inline-link";
-  link.href = "tarefas.html?v=stage6-1";
+  link.href = "tarefas.html?v=stage7-1";
   link.textContent = "Ver minhas tarefas";
   feedback.className = "form-feedback is-success";
   feedback.replaceChildren(document.createTextNode(`${message} `), link);

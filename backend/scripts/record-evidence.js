@@ -1,9 +1,12 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { createApp } from "../src/app.js";
-import { createStore } from "../src/data/store.js";
+import { openDatabase } from "../src/database/connection.js";
+import { seedDatabase } from "../src/database/seeds/demo.js";
 
 // Instância isolada: o relatório não altera os dados da aplicação em execução.
-const server = createApp({ store: createStore() }).listen(0, "127.0.0.1");
+const database = openDatabase({ filename: ":memory:" });
+seedDatabase(database);
+const server = createApp({ database }).listen(0, "127.0.0.1");
 await new Promise((resolve) => server.once("listening", resolve));
 const baseUrl = `http://127.0.0.1:${server.address().port}`;
 const records = [];
@@ -35,4 +38,5 @@ try {
 } finally {
   server.closeAllConnections();
   await new Promise((resolve) => server.close(resolve));
+  database.close();
 }

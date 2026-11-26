@@ -167,6 +167,9 @@ export const initTasks = () => {
   window.addEventListener("storage", (event) => {
     if (!isApiMode && event.key === TASK_STORAGE_KEY) refreshTaskInterfaces();
   });
-  window.addEventListener("studyflow:subjects-updated", refreshTaskInterfaces);
+  window.addEventListener("studyflow:subjects-updated", () => {
+    if (isApiMode) loadTasks();
+    else refreshTaskInterfaces();
+  });
   loadTasks();
 };

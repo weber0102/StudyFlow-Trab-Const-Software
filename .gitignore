@@ -2,3 +2,9 @@
 .DS_Store
 Thumbs.db
 node_modules/
+backend/data/
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+.env
